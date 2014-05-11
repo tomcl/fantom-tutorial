@@ -1,0 +1,8860 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage{pgfplots}
+\usetikzlibrary{external} 
+\tikzexternalize[prefix=tikz/]
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\end_preamble
+\options usenames,dvipsnames
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "basicstyle={\ttfamily\footnotesize},frame=leftline,language=Java,showspaces=false,showstringspaces=false"
+\tracking_changes false
+\output_changes true
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\author 275830148 "tomcl" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+A Short Introduction to Fantom
+\end_layout
+
+\begin_layout Author
+Thomas J.
+ W.
+ Clarke
+\end_layout
+
+\begin_layout Date
+5 May 2014
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomencl_print
+LatexCommand printnomenclature
+set_width "auto"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Introduction
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Introduction"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This tutorial should be read together with the excellent 
+\begin_inset CommandInset href
+LatexCommand href
+name "standard Fantom documentation"
+target "http://fantom.org/doc/index.html"
+
+\end_inset
+
+.
+ It is written for someone who has a fair knowledge of at least one C family
+ 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "OO"
+description "Object oriented - a language which supports classes, instances of which combine data and program."
+
+\end_inset
+
+ language (e.g.
+ Java or C++) and wants to read and write Fantom.
+ It will focus on features of Fantom that are unusual and can be difficult
+ for newcomers to understand.
+ Mostly these features represent improvements of Fantom over many other
+ languages, or at least design trade-offs that can be argued to be in a
+ sweet spot.
+ Fantom also has improvements that are obvious and intuitive while keeping
+ most of the Java syntax and operators so that code looks familiar.
+\end_layout
+
+\begin_layout Section
+Getting Started
+\end_layout
+
+\begin_layout Standard
+To get started:
+\end_layout
+
+\begin_layout Enumerate
+Download and setup tools following the standard documentation get started
+ guidance, or for a little more help: 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Prerequisites"
+
+\end_inset
+
+ and then 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:F4-Eclipse-IDE"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Read Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Syntactic-Differences-from"
+
+\end_inset
+
+ that summarises the syntactic issues you need to know when writing code.
+ 
+\end_layout
+
+\begin_layout Enumerate
+You should read the introduction to Chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Fantom-Types"
+
+\end_inset
+
+ right away in order to understand the highly unusual way in which static
+ types are used in Fantom.
+\end_layout
+
+\begin_layout Standard
+The other Chapters in this Tutorial are for when you want to understand
+ aspects of the language semantics.
+ It can be read consecutively or dipped into when you realise there is something
+ you do not understand.
+ When learning Fantom you will find the standard documentation, and particularly
+ the documented methods of the standard library 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "pod"
+description "Fantom code module. Pods are the unit of code compilation and dependency, and have version numbers as well as names."
+
+\end_inset
+
+s, best for specific problems.
+ This tutorial brings together material that is otherwise scattered throughout
+ the standard documentation and in some cases nonexistent, and creates a
+ language-aspect focussed overview.
+\end_layout
+
+\begin_layout Section
+Language Features
+\end_layout
+
+\begin_layout Standard
+There follows a description of some of the notable characteristics of Fantom.
+ 
+\end_layout
+
+\begin_layout Description
+API A complete set of standard libraries rewritten from Java with the aim
+ of providing cross-platform portability and a simple clean interface for
+ the programmer.
+ Its authors argue that the Fantom libraries, capturing functionality in
+ a relatively small number of large but capable classes, make typical use
+ cases less much burdensome and cleaner.
+ This combines with the use of function parameters whenever this is appropriate
+ to make a significant improvement over Java.
+ Those who have only basic knowledge of Java libraries will find it easier
+ to learn to use Fantom than the corresponding Java.
+ Those very familiar with Java libraries will have some overhead learning
+ new libraries, but will appreciate the improvements.
+ Running on a 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "JVM"
+description "Java Virtual Machine: interpreter and (typically) just in time compiler than can run Java jar files."
+
+\end_inset
+
+ Fantom can easily access Java native libraries as well, so the resources
+ of the Java programming ecosystem remain available.
+\end_layout
+
+\begin_layout Description
+Types Both static and 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "dynamic typing"
+description "Data types are held as a property associated with data values and checked for consistency only when these are used at run-time. No types are decalared in the porgram source."
+
+\end_inset
+
+ can be used in a pragmatic way.
+ The idea is that the static type-checking will still catch nearly all type
+ errors but things are done to improve readability over other 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "static strongly typed"
+description "Types are specified in source code with variable and function declarations and checked by the compiler. All data has a type and all types must be correct."
+
+\end_inset
+
+ language such as Java:
+\end_layout
+
+\begin_layout Itemize
+Static types are deliberately kept simple.
+ More complex type systems (
+\begin_inset CommandInset href
+LatexCommand href
+name "Scala"
+target "http://www.scala-lang.org/"
+
+\end_inset
+
+) can provide better static checking but at the cost of additional linguistic
+ complexity.
+ Fantom falls back gracefully to strong dynamic typing for anything too
+ complex for the static type system.
+\end_layout
+
+\begin_layout Itemize
+Wherever possible (local variables and closures) type inference is allowed
+ and type-related 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "cruft"
+description "Unnecessary words within source code that do not affect or clarify meaning and bulk out the code describing the algorithm"
+
+\end_inset
+
+ cluttering code may be omitted.
+ There is usually no need to give the types of local variables or closures
+ because this is obvious from context: where not types can be written explicitly
+ and will be checked.
+\end_layout
+
+\begin_layout Itemize
+Constructs to reflect and do dynamic dispatch allow dynamic typing to be
+ used where necessary.
+ Dynamic checks will be added as needed to ensure safety.
+\end_layout
+
+\begin_layout Itemize
+The static type system incorporates information about whether 
+\family typewriter
+null
+\family default
+ is allowed in a type and tracks this.
+ This reduces the typical Java or C++ null pointer errors that are so ubiquitous
+, and also makes finding them much simpler.
+\end_layout
+
+\begin_layout Itemize
+Static typing incorporates implicit casting where this might be correct,
+ thus eliminating the need for pervasive casting.
+ Implicit casting puts some of the type checking back into the run-time,
+ but since most type errors come from things that have no values in common
+ (e.g.
+ mixing 
+\family typewriter
+Float
+\family default
+ and 
+\family typewriter
+Str
+\family default
+), it does not much change the ability of static typing to provide compile-time
+ checking.
+\end_layout
+
+\begin_layout Description
+Closures Fantom regards functions as first class objects and the standard
+ libraries have been written from ground up to use closures as parameters
+ where this simplifies things.
+ Other languages use closures (notably Ruby) but Fantom's closures are (sometime
+s) statically typed and both highly expressive, and supported by special
+ syntax, a powerful tool.
+\end_layout
+
+\begin_layout Description
+It-blocks Idiomatic Fantom uses closures written in a compact syntax - it-blocks
+ - that is intuitive: but only when you understand it! This is probably
+ the single most difficult aspect of Fantom for newcomers.
+ It is well worth the small effort to master this because code written using
+ it-blocks is compact, clean, and expressive.
+\end_layout
+
+\begin_layout Description
+Actors Fantom has a model of concurrency based on message-passing using
+ actors.
+ An actor models possibly fine-grained concurrency with a message-processing
+ function that is called repeatedly, once for each input message, and generates
+ each time a reply message.
+ Actors can have internal state, though this is not encouraged.
+\end_layout
+
+\begin_layout Description
+Mutability In order to support safe concurrent computation Fantom provides
+ built-in linguistic support for whether or not expressions are mutable.
+ An 
+\emph on
+immutable
+\emph default
+ expression can safely be passed between concurrent threads because order
+ of execution cannot change its value.
+ Immutable expressions include constants, as expected, but also dynamic
+ structures such as Lists and Maps that have been 
+\emph on
+made immutable
+\emph default
+.
+ The compiler can track immutability within the static type system.
+\end_layout
+
+\begin_layout Description
+Syntax One of the most important determinants of usability in a language
+ is syntax that makes programs compact and easy to read.
+ The trade-off here is between simplicity and regularity (is it easy to
+ learn) and expressiveness.
+ Small changes in one part of the language can have far-reaching effects.
+ For example, in Fantom, much of the syntactic niceness of the type system,
+ allowing optional type inference, comes from the device of distinguishing
+ type names with initial capital letters.
+\end_layout
+
+\begin_layout Standard
+The Chapters 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Fantom-Types"
+
+\end_inset
+
+-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Concurrency"
+
+\end_inset
+
+ cover some of these areas highlighting things that are surprising or more
+ complex.
+ For more complete details refer to the standard documentation, which also
+ has a good write-up of what is different and better about Fantom when compared
+ with Java.
+ 
+\end_layout
+
+\begin_layout Standard
+Fantom is positioned as a highly usable and above all productive language.
+ Much as Python it's design aims to make the programmer more productive,
+ with constructs to make typical code compact and highly readable.
+ Python is irredeemably wedded to dynamic types and the lack of proper static
+ typing, Fantom sees the advantages of mandatory static typing both in documenti
+ng programs and catching as many errors as possible errors at compile time.
+\end_layout
+
+\begin_layout Standard
+Unlike many post-Java languages Fantom comes with its own complete set of
+ standard libraries, rewritten for simplicity and much easier to use than
+ the many-layered Java libraries.
+ The language can run on a JVM and interface to Java where this is needed.
+\end_layout
+
+\begin_layout Standard
+Although Fantom typically runs on a JVM it is highly portable and Fantom
+ Pods can be run under JavaScript (for web pages) and .NET.
+ That makes Fantom a good candidate for web development where server-side
+ and client-side code can be written in the same language.
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Syntactic Differences from Java
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Syntactic-Differences-from"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Much of Fantom syntax will be familiar to anyone who knows Java.
+ The list below shows some of the most obvious syntactic differences:
+\end_layout
+
+\begin_layout Itemize
+Names use 
+\emph on
+casing
+\emph default
+ to determine semantics.
+ Types have initial upper-case.
+ Everything else (methods, variables) must have initial lower-case.
+ 
+\begin_inset CommandInset href
+LatexCommand href
+name "Camelcasing"
+target "http://en.wikipedia.org/wiki/CamelCase"
+
+\end_inset
+
+ is conventionally used instead of underscores in names: 
+\family typewriter
+
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+aLongVariableName
+\end_layout
+
+\end_inset
+
+
+\family default
+, 
+\family typewriter
+
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+ALongTypeName
+\end_layout
+
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\end_inset
+
+ is optional at the end of lines.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+()
+\end_layout
+
+\end_inset
+
+ is optional in method invocation, and where the last parameter of a method
+ call is a closure this can be pulled out of the methods call brackets -
+ which therefore often may be omitted - and written after the method name.
+\end_layout
+
+\begin_layout Itemize
+Types are optional for local variables.
+\end_layout
+
+\begin_layout Itemize
+Special syntax exists for Lists 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+[1,2,3] 
+\end_layout
+
+\end_inset
+
+and Maps 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+[1:1,2:4,3:9]
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+:=
+\end_layout
+
+\end_inset
+
+ must be used to declare and initialise a local variable.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+null
+\end_layout
+
+\end_inset
+
+
+\family default
+ is a value allowed only in nullable types (
+\family typewriter
+
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+List?
+\end_layout
+
+\end_inset
+
+
+\family default
+, 
+\family typewriter
+
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+MyType?
+\end_layout
+
+\end_inset
+
+
+\family default
+) and not in 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "non-nullable "
+description "cannot contain null as a value"
+
+\end_inset
+
+types (
+\family typewriter
+
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+List
+\end_layout
+
+\end_inset
+
+
+\family default
+, 
+\family typewriter
+
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+MyType
+\end_layout
+
+\end_inset
+
+
+\family default
+).
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "string interpolation"
+description "Escaped sub-sequences within a string that are replaced by corresponding values"
+
+\end_inset
+
+is introduced by 
+\family typewriter
+
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+$
+\end_layout
+
+\end_inset
+
+
+\family default
+ with 
+\family typewriter
+
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+{ }
+\end_layout
+
+\end_inset
+
+
+\family default
+ braces optionally to allow more complex interpolated expressions 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+"The square of $n is ${n*n}."
+\end_layout
+
+\end_inset
+
+.
+ Triple-quoted strings are allowed and can include unescaped escape characters
+ and newlines.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "narrowing cast"
+description "casts that convert a type into a subtype: e.g Num to Int"
+
+\end_inset
+
+s are not needed, and will be inserted implicitly with run-time type checks.
+\end_layout
+
+\begin_layout Itemize
+User-defined 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "generic types"
+description "AKA polymorphic types. Type annotations that incorporate wildcards allowing arbitrary types to be applied subject to constraints, e.g. types in a given wildcard used within one type signature must match for any specific instance of the signature."
+
+\end_inset
+
+ are not allowed, 
+\family typewriter
+Obj
+\family default
+ can be used instead with dynamic typing.
+\end_layout
+
+\begin_layout Itemize
+Many shorthand operators (see 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Language-Support-for-dynamic-typing"
+
+\end_inset
+
+) are available to make writing expressions with 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "nullable"
+description "can contain null as a value"
+
+\end_inset
+
+ or dynamic types more convenient.
+\end_layout
+
+\begin_layout Itemize
+In many contexts 
+\family typewriter
+
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+{ }
+\end_layout
+
+\end_inset
+
+
+\family default
+ introduces an 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "anonymous"
+description "without a name (in contrast to a method that will always have a method name)"
+
+\end_inset
+
+ closure with (optional) implicit single parameter 
+\family typewriter
+
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+it
+\end_layout
+
+\end_inset
+
+
+\family sans
+.
+
+\family default
+ See Chapter
+\family typewriter
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:It-Blocks-and-Declarative"
+
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Chapter
+Fantom Development Tools
+\end_layout
+
+\begin_layout Section
+Prerequisites
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Prerequisites"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fantom is developed with a set of command line Fantom tools as described
+ in the standard documentation.
+ These require a JVM to run (Java 1.6 or 1.7 as of Fantom 1.0.68).
+ The necessary Java can be downloaded as JRE 1.6 or 1.7 or JDK 6 or 7.
+ Fantom will run with 32 or 64 bit code, and requires a 32 or 64 bit JVM.
+ The links betwen the Fantom tools and the JVM they depend on is normally
+ found automatically but can be configured via an environment variable.
+ All the standard tools work equally well under Windows, linux and OS-X.
+ From a command line 
+\family typewriter
+fan -version
+\family default
+ provides information about the JVM and fantom compiler currently being
+ used.
+\end_layout
+
+\begin_layout Standard
+The Fantom tools are complete and except for unavoidable JVM dependence
+ they are standalone.
+ GUI code written in Fantom using the fwt Pod has one further dependence,
+ a Java system-dependent swt jar file.
+ This can be downloaded, for a given system, from the Sun.
+\end_layout
+
+\begin_layout Standard
+To summarise, the standard tooling for Fantom requires:
+\end_layout
+
+\begin_layout Itemize
+32 or 64 bit Fantom standard compile and toolset (from www.fantom.org)
+\end_layout
+
+\begin_layout Itemize
+Java (JDKor JRE) from Java standard downloads, 32 or 64 bit to match.
+ Currently JRE 1.6 or 1.7 runs Fantom 1.0.68.
+\end_layout
+
+\begin_layout Itemize
+For GUI code using fwt pod: Java swt jar file (system-dependent) for Fantom
+ GUI code from Java standard downloads, 32 or 64 bit to match.
+\end_layout
+
+\begin_layout Standard
+This Tutorial should be enough to get started but in case of problems refer
+ to the 
+\begin_inset CommandInset href
+LatexCommand href
+name "Fantom standard documentation"
+target "http://fantom.org/doc/index.html"
+
+\end_inset
+
+ and if needed the 
+\begin_inset CommandInset href
+LatexCommand href
+name "Fantom discussion forum"
+target "http://fantom.org/sidewalk/topic/"
+
+\end_inset
+
+ where thread searches will find additional information.
+\end_layout
+
+\begin_layout Section
+Standard Build System
+\end_layout
+
+\begin_layout Standard
+Fantom comes as standard with a sophisticated standard build system, contained
+ in Fantom module 
+\family typewriter
+build
+\family default
+, in which build instructions are written in Fantom itself.
+ The build process makes executable pods from Fantom and Java native source
+ files.
+ Dependencies are explicitly stated.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Build-for-F4"
+
+\end_inset
+
+ is a subclass of Fantom standard class 
+\emph on
+BuildPod
+\emph default
+ that will compile a set of files to make a pod (
+\family typewriter
+.pod
+\family default
+) file that can be run by the Fantom launcher 
+\family typewriter
+fan
+\family default
+t.
+ The build engine uses a number of classes managing the build process.
+ Of these the most central is 
+\emph on
+BuildPod
+\emph default
+ that accepts targets - tasks to execute - for example 
+\emph on
+compile
+\emph default
+ or 
+\emph on
+clean
+\emph default
+.
+ Note that standard functionality like compile is built in as virtual methods
+ of 
+\emph on
+BuildPod
+\emph default
+ that can be overridden.
+ As shown in this example, subclasses of 
+\emph on
+BuildPod
+\emph default
+ can contain arbitrary Fantom code to customise the build process.
+ Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Build-Class-Functionality"
+
+\end_inset
+
+ shows how the build module works.
+ The lowest individual compilation unit is a Pod (a fantom module), which
+ can be made from any number of source files, mixing Fantom, Java, and Native
+ code, and which consists when compiled of a single 
+\family typewriter
+.pod
+\family default
+ file.
+ Dependencies between pods are handled via an explicit set of versioned
+ 
+\emph on
+depends
+\emph default
+ clauses.
+ 
+\emph on
+BuildPod
+\emph default
+ is the class which orchestrates compilation of a pod, checking dependencies.
+\end_layout
+
+\begin_layout Standard
+A Fantom source file must explicitly reference any pods it uses with a 
+\family typewriter
+using
+\family default
+ top-level clause as in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Build-for-F4"
+
+\end_inset
+
+.
+ These may be pods in the standard library, or other user-defined pods compiled
+ separately.
+\end_layout
+
+\begin_layout Standard
+A simple Fantom project will consist of a single pod that is compiled using
+ a subclass of BuildPod as in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Build-for-F4"
+
+\end_inset
+
+.
+ The compile target will recompile the pod after first deleting the previously
+ compiled pod file if this exists.
+ This is so that F4 will not run an older version of a pod on new compilation
+ failure.
+\end_layout
+
+\begin_layout Standard
+This tutorial does not deal with running Fantom other than under a JVM,
+ however the build system and standard tools allow this.
+ Currently Fantom under JavaScript is very well supported, and actively
+ used to write web applications, Fantom under .Net less well so.
+ See the standard documentation for further information.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Need to describe how a typical development cycle with tests works.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+using build
+\end_layout
+
+\begin_layout Plain Layout
+
+class Build : build::BuildPod
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+  new make()
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    podName = "projadmgui"
+\end_layout
+
+\begin_layout Plain Layout
+
+    summary = ""
+\end_layout
+
+\begin_layout Plain Layout
+
+    srcDirs = [`fan/`]
+\end_layout
+
+\begin_layout Plain Layout
+
+    depends = ["sys 1.0", "gfx 1.0+", "fwt 1.0+", "concurrent 1.0+", 
+\end_layout
+
+\begin_layout Plain Layout
+
+               "fluxText 1.0+", "sql 1.0+"]
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  @Target{help = "Delete target and then recompile"}
+\end_layout
+
+\begin_layout Plain Layout
+
+  override Void compile()
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    outPodDir.plusName("${podName}.pod").toFile.delete
+\end_layout
+
+\begin_layout Plain Layout
+
+    super.compile
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Build for F4 IDE
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Build-for-F4"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0pt">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Class
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Target
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Description
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BuildPod
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+compile
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Fundamental 
+\emph on
+compile
+\emph default
+ target, accepts lists of source files and dependencies, generates a Pod
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+clean
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Delete all intermediate files
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+full
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Run 
+\emph on
+clean
+\emph default
+, 
+\emph on
+compile
+\emph default
+, and then 
+\emph on
+test
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BuildScript
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+n/a
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Runs a script containing instructions with BuildPod targets to run etc
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Build Class Functionality
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Build-Class-Functionality"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+F4 Eclipse IDE
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:F4-Eclipse-IDE"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+F4 is an IDE for Fantom based on Eclipse written by xored (
+\family typewriter
+
+\begin_inset CommandInset href
+LatexCommand href
+name "www.xored.com"
+target "www.xored.com"
+
+\end_inset
+
+
+\family default
+).
+ It is the most capable of the IDEs currently existing for Fantom.
+ The current distribution (1.0.1) needs to be updated with the latest Fantom
+ interpreter after installation.
+ The F4 distribution is a self-contained directory tree of files that need
+ not be installed.
+ You can thus have different Eclipse distributions for different languages
+ coexisting with no interference.
+ You may want to set up 
+\family typewriter
+.fan
+\family default
+ extensions to open with your F4 distribution.
+\end_layout
+
+\begin_layout Standard
+A set of fixes that works (at least on Windows, and I'd expect on other
+ platforms) is:
+\end_layout
+
+\begin_layout Enumerate
+Download latest Fantom distribution.
+ Put Fantom directory somewhere, the default 
+\family typewriter
+C:/fantom
+\family default
+ is fine on Windows.
+\end_layout
+
+\begin_layout Enumerate
+Download the latest F4 directory tree release from github or xored.
+ Unzip the code to some suitable directory.
+\end_layout
+
+\begin_layout Enumerate
+Start F4.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Window
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+Preferences
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+Fantom/Interpreters.
+ Press 
+\emph on
+search
+\emph default
+ to find your Fantom distribution.
+ Tick this (instead of the in-built distribution)
+\end_layout
+
+\begin_layout Enumerate
+Add override to method 
+\family typewriter
+compile
+\family default
+ in the 
+\family typewriter
+build.fan
+\family default
+ file for any created project as per Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Build-for-F4"
+
+\end_inset
+
+ (this is a workaround, to make build and run have expected semantics)
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+@Target{help = "Delete target and then recompile"}
+\end_layout
+
+\begin_layout Plain Layout
+
+  override Void compile()
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    outPodDir.plusName("${podName}.pod").toFile.delete
+\end_layout
+
+\begin_layout Plain Layout
+
+    super.compile
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+This section is incomplete, possibly wrong, and needs updating.
+ Need to describe how to use F4 with tests.
+\end_layout
+
+\begin_layout Chapter
+Fantom Types
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Fantom-Types"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fantom's mixture of static and dynamic typing is mostly intuitive.
+ Typically the language is used as a statically typed language, with the
+ burden of writing types reduced because normally local variables can infer
+ their static type.
+ The static type system is deliberately simple, with limited generics, to
+ allow methods on 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "List"
+description "Type representing orders lists of items implemented as variable-length arrays, accessed by index."
+
+\end_inset
+
+s, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Map"
+description "Type representing associated maps (AKA hashes, dictionaries) in which values are stored with an associated key and can be looked up from the key."
+
+\end_inset
+
+s to have useful types, but without user-defined generic types.
+\end_layout
+
+\begin_layout Standard
+The key matter to understand is how dynamic typing and static typing interact.
+ In most static types languages the compiler guarantees that values at run-time
+ 
+\emph on
+must lie within the static type
+\emph default
+.
+ Anything that could lie outside will be a compile-time error.
+ Fantom changes the burden of proof.
+ The compiler guarantees only that values 
+\emph on
+may lie within the static type
+\emph default
+, and that if they do not the result will be caught by a run-time check.
+ Static type errors come from assignments that could 
+\emph on
+never
+\emph default
+ work.
+\end_layout
+
+\begin_layout Standard
+This is an interesting approach to the design trade-offs between static
+ and dynamic types languages.
+ It provides the code compactness and flexibility of a dynamic system while
+ keeping much of the compile-time error-checking of a static type system.
+ Where type errors are not discovered at compile-time the extra checks inserted
+ whenever types are narrowed means that they will be caught at run-time
+ near where they happen.
+\end_layout
+
+\begin_layout Standard
+Another consequence of this strategy is that a relatively simple type system
+ will serve, since it is always possible, with little cruft, to use a more
+ general type when a precise static type does not fit.
+ The programmer uses the static type system as an approximation to the real
+ type, and the language makes it easy to approximate more where type system
+ is too weak to capture the data's precise type.
+\end_layout
+
+\begin_layout Standard
+In practice most type errors are caught statically in Fantom.
+ Philosophically, if you view a type system as a set of contracts enforced
+ at compile-time, Fantom is weaker than other static languages but stronger
+ than dynamic languages.
+ Paradoxically that can result in more accurate (and therefore more useful)
+ type checking because for example nullability is built into the type system
+ at no inconvenience to the programmer.
+ Types are required for method 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "signature"
+description "Type specification for function specifying parameter and return types."
+
+\end_inset
+
+s and fields so static types serve to document code: in the case of nullability
+ the programmer must think whether a object is allowed to be null.
+ Programmers can always choose to bypass static typing by using 
+\emph on
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "Obj"
+description "The root of the type hierarchy, can be any type"
+
+\end_inset
+
+
+\emph default
+ as the type everywhere, but this is not encouraged by the language, and
+ typical code will have informative type annotations.
+\end_layout
+
+\begin_layout Standard
+In summary:
+\end_layout
+
+\begin_layout Itemize
+The language is as compact as a dynamic language because most type annotations
+ and casts are unnecessary.
+\end_layout
+
+\begin_layout Itemize
+Static checking will catch most errors at compile-time.
+\end_layout
+
+\begin_layout Itemize
+The remaining type errors will be caught at run-time in the method in which
+ they are made, because run-time checks will enforce typing at method boundaries.
+\end_layout
+
+\begin_layout Section
+Type Hierarchy and Fits
+\end_layout
+
+\begin_layout Standard
+Fantom has as the basis for its type system a conventional object oriented
+ type hierarchy with single inheritance in which every simply typed non-nullable
+ expression is typed as a narrowing of 
+\emph on
+Obj
+\emph default
+.
+ Every type (except Obj) has a unique parent type, which it extends, for
+ example by adding fields or methods.
+ If type 
+\emph on
+A
+\emph default
+ can in all circumstances replace type 
+\emph on
+B
+\emph default
+ (equivalently, if it adds new contracts and satisfies all the old contracts
+ of 
+\emph on
+B
+\emph default
+ type) we say that 
+\emph on
+A
+\emph default
+ fits 
+\emph on
+B
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Given two types 
+\emph on
+A
+\emph default
+ & 
+\emph on
+B
+\emph default
+ we have either 
+\emph on
+A
+\emph default
+ fits 
+\emph on
+B
+\emph default
+, 
+\emph on
+B
+\emph default
+ fits 
+\emph on
+A
+\emph default
+, or neither type fits the other.
+ In the latter case the two are incompatible.
+ If 
+\emph on
+A
+\emph default
+ fits 
+\emph on
+B
+\emph default
+ and 
+\emph on
+B
+\emph default
+ fits 
+\emph on
+A
+\emph default
+ the two types are identical.
+ If 
+\emph on
+A
+\emph default
+ is the parent of 
+\emph on
+B
+\emph default
+ then 
+\emph on
+B
+\emph default
+ fits 
+\emph on
+A
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Fits as usual is a transitive relationship, in fact it is a partial order:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+A
+\emph default
+ fits 
+\emph on
+B
+\emph default
+ AND 
+\emph on
+B
+\emph default
+ fits 
+\emph on
+C
+\emph default
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\emph on
+A
+\emph default
+ fits 
+\emph on
+C
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+A
+\emph default
+ fits 
+\emph on
+B
+\emph default
+ AND 
+\emph on
+B
+\emph default
+ fits 
+\emph on
+A
+\emph default
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\emph on
+A
+\emph default
+ = 
+\emph on
+B
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Value types (
+\emph on
+Int
+\emph default
+, 
+\emph on
+Float
+\emph default
+, etc) are optimised by the compiler but otherwise part of the type hierarchy.
+\end_layout
+
+\begin_layout Standard
+The simple tree-type hierarchy that Fantom shares with all OO languages
+ is extended in two ways specific to Fantom.
+\end_layout
+
+\begin_layout Subsection
+Nullability
+\end_layout
+
+\begin_layout Standard
+Any type 
+\emph on
+A
+\emph default
+ must be either nullable or non-nullable.
+ Nullable types can have 
+\family typewriter
+null
+\family default
+ as a value, non-nullable types cannot do so.
+ The nullable equivalent of non-nullable 
+\emph on
+A
+\emph default
+ is written 
+\emph on
+A?
+\emph default
+ values of type 
+\family typewriter
+\emph on
+A?
+\family default
+\emph default
+ can include 
+\family typewriter
+null
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Fits extends to nullability in the obvious way, non-nullable is a narrowing
+ of nullable:
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+A
+\emph default
+ fits 
+\emph on
+B
+\emph default
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\emph on
+A fits B?
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+A
+\emph default
+ fits 
+\emph on
+B
+\emph default
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+
+\emph on
+A? fits B?
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
+A?
+\emph default
+ never fits 
+\emph on
+B
+\end_layout
+
+\begin_layout Standard
+The motivation for putting nullability into the static type system is that
+ this provides some static protection against null pointer errors, which
+ are otherwise, at run-time, unpleasant to debug.
+ Note also that 
+\family typewriter
+null
+\family default
+, empty lists and maps, are distinct things.
+ Note also that 
+\emph on
+Void
+\emph default
+ is a special type that has no return value (not even 
+\family typewriter
+null
+\family default
+).
+ 
+\emph on
+Void?
+\emph default
+ does not exist.
+\end_layout
+
+\begin_layout Standard
+Fantom will automatically insert run-time checks where a nullable type is
+ used in a non-nullable context.
+ Where a known 
+\family typewriter
+null
+\family default
+ value is explicitly used is a non-nullable context there will be a static
+ type error.
+\end_layout
+
+\begin_layout Subsection
+Mixins and Inheritance
+\end_layout
+
+\begin_layout Standard
+Mixins are Fantom's equivalent of Java's interfaces - but they are more
+ powerful.
+ A 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "mixin"
+description "set of abstract fields and (possibly concrete) methods that specify an interface to be satisfied by a subclass. Similar to java interface but more general"
+
+\end_inset
+
+ is a variety of type which is not designed to be used stand alone.
+ Instead a mixin packages a group of 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "slot"
+description "named field or method associated with a class and accessed via name from objects of the class using the . operator"
+
+\end_inset
+
+s together to be inherited into a class (or another mixin).
+\end_layout
+
+\begin_layout Standard
+Mixins are similar to interfaces in Java or C#, but much more flexible.
+ A Java or C# interface is purely a type definition of 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "abstract method"
+description "method of abstract class with signature but without implementation: this must be provided by a subclass in order for(subclass)  instances to be created."
+
+\end_inset
+
+s, it can't actually include any behavior itself.
+ Fantom mixins can declare concrete methods which provide a lot more power.
+\end_layout
+
+\begin_layout Standard
+You can't create instances of a mixin - they are an abstract type designed
+ to provide reuse when inherited into classes.
+ Mixins also can't store state - although they can contain 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "abstract field"
+description "field of abstract class with type but without data: this must be provided by a subclass in order for (subclass)  instances to be created."
+
+\end_inset
+
+s to define a type contract which requires a field signature.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Mixins can themselves inherit zero or more mixins.
+\end_layout
+
+\begin_layout Enumerate
+Mixin inheritance is transitive on both mixins and types.
+\end_layout
+
+\begin_layout Enumerate
+If 
+\emph on
+A'
+\emph default
+ inherits set 
+\begin_inset Formula $A_{m}$
+\end_inset
+
+ of mixins, and 
+\emph on
+B' 
+\emph default
+inherits set 
+\begin_inset Formula $B_{m}$
+\end_inset
+
+ of mixins, then 
+\emph on
+A
+\change_deleted 275830148 1399651357
+'
+\change_unchanged
+
+\emph default
+ fits 
+\emph on
+B
+\emph default
+ if this is true ignoring mixins, and 
+\begin_inset Formula $A_{m}\supseteq B_{m}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Mixin inheritance is restricted.
+ From the standard documentation:
+\end_layout
+
+\begin_layout Standard
+The inheritance rules listed above define which slots get inherited into
+ a sub-type’s slot name-space.
+ Remember that a type's slots are keyed only by name, so under no circumstances
+ can a type have two different slots with the same name.
+ Because of this axiom, there are cases which prevent creating a subtype
+ from conflicting super types:
+\end_layout
+
+\begin_layout Itemize
+Two types with static methods of the same name can't be combined into a
+ subtype 
+\end_layout
+
+\begin_layout Itemize
+Two types with 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "const field"
+description "field with value that is a constant (can be created dynamically in constructor)."
+
+\end_inset
+
+s (either instance or static) of the same name can't be combined into a
+ subtype 
+\end_layout
+
+\begin_layout Itemize
+Two types with instance slots of the same name and different signatures
+ can't be combined into a subtype Two types with instance slots of the same
+ name and same signature can be combined provided the following holds true:
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+One is concrete and the other is abstract 
+\end_layout
+
+\begin_layout Itemize
+Both are virtual and the subtype overrides to provide unambiguous definition
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Using the rules above, Fantom avoids the diamond inheritance problem.
+ First mixins can't declare concrete fields, which mean they never store
+ state.
+ Second any ambiguity that arises from diamond inheritance or otherwise
+ requires the subclass to explicitly disambiguate (or if the inherited slots
+ are not virtual, then the subtype simply cannot be created).
+\end_layout
+
+\begin_layout Section
+Funcs and over or under binding of parameters
+\end_layout
+
+\begin_layout Standard
+Functions in Java have zero or more parameters, each with a well-defined
+ type.
+ They have a return type that may be Void, indicating no return value.
+ 
+\end_layout
+
+\begin_layout Standard
+Functions are typically written in methods, in which case the parameter
+ and return types must be specified.
+ Functions may also be written as closures, see Chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Functional-Programming-and"
+
+\end_inset
+
+, in which case the types of parameters and/or return value need not be
+ specified if they can be inferred from context.
+\end_layout
+
+\begin_layout Standard
+In a function call, over-binding of parameters is allowed, the extra parameters
+ are ignored.
+ Under-binding of parameters is allowed if all the parameters not bound
+ have default values.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Int add(Int a, Int b)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+   return a+b
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Void main
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+  echo(add(1,2,5)) // this prints '3'
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is particularly useful in the API where for example the 
+\family typewriter
+Map.map
+\family default
+ method:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Obj:Obj? map(|V,K->Obj?| c)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Takes a function 
+\family typewriter
+c
+\family default
+ that is given two parameters, the mapped item's 
+\family typewriter
+value
+\family default
+ and 
+\family typewriter
+key
+\family default
+.
+ If the key is not required a single parameter function may be used for
+ this that accepts only the value.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+x := [1,2,3]
+\end_layout
+
+\begin_layout Plain Layout
+
+y := x.map( |Int x, Int y->Int| { return x*x})
+\end_layout
+
+\begin_layout Plain Layout
+
+z := x.map( |Int x ->Int| { return x*x})
+\end_layout
+
+\begin_layout Plain Layout
+
+w := x.map {it*it}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The expressions assigned to 
+\family typewriter
+x,y,z
+\family default
+ are all equivalent.
+\end_layout
+
+\begin_layout Subsection
+Func.bind
+\end_layout
+
+\begin_layout Standard
+Functions supplied with a smaller than required number of parameters can
+ be repackaged as closures callable by supplying the extra parameters using
+ 
+\family typewriter
+Func.bind
+\family default
+ and giving the bound parameters as a list.
+ Using 
+\family typewriter
+add
+\family default
+ as above:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+|Int->Int| plusone := add.bind([1])
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Differences from Java in Class definitions
+\end_layout
+
+\begin_layout Standard
+The main differences between Java and Fantom classes are listed here: this
+ is not intended to be a complete language tutorial, for details please
+ refer to the standard documentation.
+\end_layout
+
+\begin_layout Itemize
+Static fields or methods must be const, and use both keywords
+\end_layout
+
+\begin_layout Itemize
+methods and fields default to public scope
+\end_layout
+
+\begin_layout Itemize
+Implicit virtual getters and setters are declared for every field and can
+ be used by using or assigning to the field
+\end_layout
+
+\begin_layout Section
+Type Inference: Implicit and Explicit Type Casting
+\end_layout
+
+\begin_layout Standard
+In Fantom static type checking must succeed or compilation will fail.
+ Success means that every type in the program 
+\emph on
+could fit
+\emph default
+ the type required by its context.
+ Note the difference from most other static type systems, which guarantee
+ that every type 
+\emph on
+will fit 
+\emph default
+its context and therefore run-time type errors cannot happen.
+\end_layout
+
+\begin_layout Standard
+Therefore in Fantom whenever a type is implicitly narrowed by the compiler
+ a run-time check is inserted that will fail if the value is of the wrong
+ type.
+\end_layout
+
+\begin_layout Standard
+Because methods must be typed this localises things like null error problems
+ to the method in which they occur.
+ Think of the static types as being a shorthand for inserting dynamic type
+ checks - 
+\emph on
+but only where this is needed because the inferred type could result in
+ a bad value
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+This is a pragmatic approach that in practice catches many type errors at
+ compile-time, and also provides documentation of programmer intent, without
+ burdening the code with continual type-casts or the type system with very
+ complex types.
+\end_layout
+
+\begin_layout Standard
+Type widening or narrowing will be implemented implicitly when needed by
+ the compiler.
+ For example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Obj test1( Int x)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+   return x
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this example parameter
+\family typewriter
+ x
+\family default
+ is type 
+\emph on
+Int
+\emph default
+ and is in a context given by the 
+\family typewriter
+test1
+\family default
+ return Type of 
+\emph on
+Obj
+\emph default
+.
+ Therefore the value of 
+\family typewriter
+x
+\family default
+ is widened to 
+\emph on
+Obj
+\emph default
+ implicitly and this code type checks, it can never fail at run-time.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Int test2( Obj x)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+   return x
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This code will also static type check, but the compiler will insert a run-time
+ check to ensure that the parameter value is actually an 
+\emph on
+Int
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Another example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Int test( Int? x)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+   return x
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+Test3
+\family default
+ will compile but return a run-time error if its parameter is 
+\family typewriter
+null
+\family default
+ - which is allowed in the nullable type of 
+\family typewriter
+x
+\family default
+ but not in the non-nullable return type.
+\end_layout
+
+\begin_layout Section
+Generic Typing for List, Map
+\end_layout
+
+\begin_layout Standard
+Generic types, also known as polymorphic types, are useful to model operations
+ that can be applied to different types and have type relationships between
+ input and output types.
+ For example a function that returns all the even numbered elements a list
+ must return a list of the same type as its input.
+ This cannot be captured by a fixed type system, since that would restrict
+ the function.
+\end_layout
+
+\begin_layout Standard
+Fantom allows generic types but only in system-defined methods on built-in
+ types.
+ For other cases dynamic typing must be used, with types approximated by
+ 
+\emph on
+Obj
+\emph default
+, as is always possible.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+Figure
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Generics"
+
+\end_inset
+
+ shown the labels used for the constituent types of List and Map that are
+ used in the type definitions of methods operating on these types.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="3cm">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Type
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Generic names of constituent types
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Generic name for type
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+List
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+V[]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+L=V[]
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Map
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+[K:V]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+M = [K:V]
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generics
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Generics"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Static vs Dynamic Type Checking for List, Map
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Int [] Test( Int [] x)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+   y = x.map(|Int n -> Int| {n*n} )
+\end_layout
+
+\begin_layout Plain Layout
+
+   y[0] = ""
+\end_layout
+
+\begin_layout Plain Layout
+
+   y[1] = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+   return y
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This function type-checks because the result of the map operation is an
+\emph on
+ Obj[]
+\emph default
+ in Fantom.
+ The map function is typed 
+\emph on
+Int->Int
+\emph default
+ but the context required by map is 
+\emph on
+Int->Obj
+\emph default
+ and so its static type is widened and the type inferred for 
+\family typewriter
+y
+\family default
+ is therefore 
+\emph on
+Obj[]
+\emph default
+.
+ The resulting list will be implictly cast to 
+\emph on
+Int[]
+\emph default
+.
+ as a return value.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Int [] Test( Int [] x)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+   Int [] y = x.map(|Int n -> Int| {n*n} )
+\end_layout
+
+\begin_layout Plain Layout
+
+   y[0] = ""
+\end_layout
+
+\begin_layout Plain Layout
+
+   y[1] = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+   return y
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here the programmer has (correctly) typed 
+\family typewriter
+y
+\family default
+ as
+\emph on
+ Int[]
+\emph default
+.
+ This function fails to static type-check because 
+\emph on
+Str
+\emph default
+ and 
+\emph on
+Int
+\emph default
+ are incompatible, so the assignment of an empty 
+\emph on
+Str
+\emph default
+ to 
+\family typewriter
+y[0]
+\family default
+ fails static checking.
+\end_layout
+
+\begin_layout Subsection
+Holes in the static type system
+\end_layout
+
+\begin_layout Standard
+List and Map types are not properly captured by the fits function.
+ Specifically:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Int []
+\emph default
+ fits 
+\emph on
+Num []
+\end_layout
+
+\begin_layout Standard
+This is true for getters, because all elements read from an
+\emph on
+ Int[]
+\emph default
+ will be correct values of a 
+\emph on
+Num[]
+\emph default
+.
+ It is untrue in general for setters.
+ A float value may be written to a 
+\emph on
+Num[]
+\emph default
+ but this will be invalid written to an 
+\emph on
+Int[]
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+The effect of this in Fantom is that in some circumstances dynamic type
+ errors (caught by the JVM) are not seen by the compiler.
+ This practically is acceptable because it does not happen often, and the
+ errors are in any case caught.
+ This is also in the spirit of implicit casting, pervasive in Fantom, which
+ can also result in run-time errors.
+\end_layout
+
+\begin_layout Section
+Language Support for Dynamic Typing
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Language-Support-for-dynamic-typing"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fantom has a selection of operators that make it more convenient to write
+ expressions with dynamic types and 
+\family typewriter
+null
+\family default
+ values.
+ These are summarised in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Shortcut-operators-for"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="4">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="2.5cm">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top" width="8cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Operator
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Example
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none" width="8cm">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Description
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+->
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dynamic Invoke
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+obj->username
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Call a method or access a field available on the dynamic type of the instance
+ 
+\family typewriter
+obj
+\family default
+.
+ This is the dynamic equivalent of the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+.
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ operator.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+?:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Elvis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+x ?: y
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align left
+
+\family typewriter
+\size small
+if (x != null) return x else return y 
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align left
+The type of x must be nullable
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+?.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Safe Invoke
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+\size small
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+userlist?.find("Bob")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Returns the expression if the LHS is not null, otherwise returns null.
+ Useful for chaining method calls
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+?->
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Safe Dynamic Invoke
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+\size small
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+userlist?->find("Bob")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+As above, but the method call is dynamic (can be used where the static type
+ of userlist is 
+\emph on
+Obj
+\emph default
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+as
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Safe Cast
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+x as y
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Returns x cast to type 
+\family typewriter
+y
+\family default
+ if this is possible, otherwise 
+\family typewriter
+null
+\family default
+.
+ Note that the result type must therefore be nullable.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+( )
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cast
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+(Y) x
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Casts 
+\family typewriter
+x
+\family default
+ to type
+\family typewriter
+ Y
+\family default
+.
+ If this is not possible throw 
+\family typewriter
+TypeError
+\family default
+ at run-time.
+ Normally in Fantom casts are not needed since where necessary they are
+ inserted implicitly by the compiler
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Operators for dealing with types
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Shortcut-operators-for"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Functional Programming and Closures
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Functional-Programming-and"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Idiomatic Fantom is compact and readable partly because it can represent
+ function calls with closure parameters compactly.
+ This notation is easy to use and read when you understand it, but opaque
+ when you don't.
+ In this Chapter we will first learn about how functions and closures work
+ in Fantom, and then look at the notation that makes it easy to write them.
+\end_layout
+
+\begin_layout Standard
+There are two different use cases commonly found for this notation, used
+ very heavily in good Fantom code.
+ 
+\end_layout
+
+\begin_layout Itemize
+When constructing an object, particularly in GUI code where GUI windows
+ are set up with complex nested widget constructor calls.
+ 
+\end_layout
+
+\begin_layout Itemize
+When using a method whose last parameter is a function, such as 
+\family typewriter
+List.each
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+If you are familiar with Java, reading idiomatic Fantom is mostly a matter
+ of understanding how these closures work, and what the compact syntax used
+ for them means.
+\end_layout
+
+\begin_layout Standard
+In this Chapter we will review what a function is in Fantom, and specifically
+ how functions can be used as values.
+ Then we will introduce the idea of a closure as a way to write an anonymous
+ function.
+ We will look at the (limited) support for functional programming in Fantom,
+ as an example of the use of closures.
+\end_layout
+
+\begin_layout Standard
+In Chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:It-Blocks-and-Declarative"
+
+\end_inset
+
+ we will see how Fantom uses some clever syntax borrowed in part from Ruby
+ to make use of closures in code very readable.
+\end_layout
+
+\begin_layout Standard
+Those not used to functional programming will wonder why introduce this
+ complexity of functions used as data? It turns out that there are many
+ problems much more easily solved using this technique.
+ In Fantom the standard library API makes heavy use of 
+\emph on
+function parameters
+\emph default
+, for example as in 
+\family typewriter
+List.each
+\family default
+ and these are normally provided by closures.
+\end_layout
+
+\begin_layout Section
+Functions as First-Class Objects
+\end_layout
+
+\begin_layout Standard
+In Fantom functions are so-called 
+\family typewriter
+first class
+\family default
+ objects, just like any other data type, and can be passed to other functions
+ or stored in variables.
+ A function is an object with a built-in 
+\family typewriter
+apply
+\family default
+ method that can be used to call the function with zero or more parameters.
+ Function objects called with too few parameters result in a run-time error.
+ More parameters than needed is allowed, the extra parameters are ignored.
+\end_layout
+
+\begin_layout Standard
+Think of a method as being a wrapper for a function object that binds it
+ to a class allowing it to be accessed from the class or object via the
+ method name.
+ Function objects are normally used by calling the 
+\family typewriter
+apply
+\family default
+ method:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+sum.apply(2,3)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+is normally written 
+\family typewriter
+sum(2,3)
+\family default
+.
+ Here there are two possibilities for the name 
+\family typewriter
+sum
+\family default
+: 
+\end_layout
+
+\begin_layout Itemize
+sum is a variable set to the correct function object.
+\end_layout
+
+\begin_layout Itemize
+sum is a method that wraps the correct function object.
+ 
+\end_layout
+
+\begin_layout Standard
+If sum contains the standard binary add function object this will return
+ the sum of 
+\family typewriter
+2
+\family default
+ and 
+\family typewriter
+3
+\family default
+.
+ In fact the syntax 
+\family typewriter
+2+3
+\family default
+ is a shorthand for this apply method call on the 
+\family typewriter
+add
+\family default
+ function.
+\end_layout
+
+\begin_layout Standard
+One way to use a function object is to define a method with the required
+ function and use the method name to access the function object.
+ This requires some care, because in Fantom a method with zero parameters
+ is automatically called by writing its name.
+ To extract the function object we need to use the method name in a way
+ that avoids this automatic function call: 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+class Funcs 	
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+  void main()
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+	fvar := /*obtain sum function */
+\end_layout
+
+\begin_layout Plain Layout
+
+    tvar := /*obtain timeInUs function */
+\end_layout
+
+\begin_layout Plain Layout
+
+	echo("sum(2,3) is ${ fvar(2,3) }")
+\end_layout
+
+\begin_layout Plain Layout
+
+    echo("Time in us is ${tvar()}")
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  static Int sum(Int a, Int b) { return a+b }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  Int timeInUs() { return DateTime.nowTicks/1000 }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In class Funcs method Sum wraps the binary add function on integers.
+ Let us see what expressions we might use to replace the comments in the
+ code to make this work by setting fvar and tvar to the two function objects
+ written in the 
+\family typewriter
+sum
+\family default
+ and 
+\family typewriter
+timeInUs
+\family default
+ methods.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+sumvar := sum
+\family default
+ - the method name on its own will return the sum function object 
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+sumvar := Funcs.sum
+\family default
+ - We could access this via the class name if we wanted because the method
+ is static.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+sumvar := #sum.func
+\family default
+ - this also works 
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+tvar := timeInUs
+\family default
+ - this does not work because the function is automatically called 
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+tvar := #timeInUs.func
+\family default
+ - this works 
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+tvar := Funcs#timeInUs.func
+\family default
+ 
+\end_layout
+
+\begin_layout Section
+Closures
+\end_layout
+
+\begin_layout Standard
+A closure is a way to write an anonymous function as an expression.
+\end_layout
+
+\begin_layout Standard
+Here is an example of a simple closure, representing an anonymous function
+ with one 
+\family typewriter
+Int
+\family default
+ parameter 
+\family typewriter
+n
+\family default
+ that returns a value of type 
+\family typewriter
+Bool
+\family default
+, 
+\family typewriter
+true
+\family default
+ if 
+\family typewriter
+n
+\family default
+ is even.
+ Although this code looks somewhat like a method definition, it is syntactically
+ an expression.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+|Int n->Bool|  
+\end_layout
+
+\begin_layout Plain Layout
+
+{ 
+\end_layout
+
+\begin_layout Plain Layout
+
+  return n % 2 == 0 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The first line 
+\family typewriter
+|Int n->Bool|
+\family default
+ is the function signature that specifies parameter names and return type.
+ Note the similarity with a method: the signature replaces the method header.
+\end_layout
+
+\begin_layout Standard
+Closures are often written on a single line:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+|Int n->Bool| { return n % 2 == 0 }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+return
+\family default
+ keyword can be omitted in a closure: 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+|Int n->Bool| { n % 2 == 0 }
+\end_layout
+
+\end_inset
+
+ A function from which the return type can be inferred can omit the 
+\family typewriter
+->ReturnType
+\family default
+ in the signature.
+ Note also that multiple statements inside the closure body can be written
+ on a single line separated by 
+\family typewriter
+;
+\family default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+|Int n| { echo("WARNING"); echo("n=$n.toStr") }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The parameter types in the signature can be omitted when they can be inferred
+ from the function body:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+|n->Bool| { n % 2 == 0 }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As a special case a 
+\family typewriter
+Void
+\family default
+ function with no parameters is written:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+|->| { echo("Finshed") }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Unbound variables in closures
+\end_layout
+
+\begin_layout Standard
+A Closure can be defined in a class or method and therefore may reference
+ names not defined inside the closure.
+ Such 
+\emph on
+unbound names
+\emph default
+ can be referenced by the closure if they are in scope where they the closure
+ is defined.
+ Inside a class fields or methods may be referenced.
+ The object instance (of the containing class, not of the closure object)
+ is referenced by 
+\family typewriter
+this
+\family default
+ so:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+this.methodname
+\end_layout
+
+\end_inset
+
+ A method local variable in scope is referenced by its name unqualified.
+ Other unqualified names are implicitly taken as slots of 
+\family typewriter
+this
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+When unbound names are referenced in a closure the variable is accessed
+ by reference, and may be read or written by the closure.
+ Multiply calls of the closure will use the same storage for these unbound
+ variables.
+ Local variables and parameters will normally disappear when a method exits.
+ If they are captured by a closure that remains alive then they will stay
+ alive after the function call that created them terminates.
+\end_layout
+
+\begin_layout Subsection
+Mutability of closures
+\end_layout
+
+\begin_layout Standard
+A closure is constant (immutable) if it cannot access any unbound mutable
+ state (by capturing a non-constant field or variable).
+\end_layout
+
+\begin_layout Section
+Functional Programming
+\end_layout
+
+\begin_layout Standard
+Fantom is an object oriented language and does not encourage functional
+ programming.
+ Mostly, in Fantom, functions are passed to the API rather than used to
+ manipulate data in a functional way.
+\end_layout
+
+\begin_layout Standard
+A small but useful subset of functional programming techniques is well supported
+ by 
+\family typewriter
+map
+\family default
+ and 
+\family typewriter
+reduce
+\family default
+ methods on the List type, and 
+\family typewriter
+map
+\family default
+ on the 
+\family typewriter
+Map
+\family default
+ type.
+\end_layout
+
+\begin_layout Subsection
+Map and reduce
+\end_layout
+
+\begin_layout Standard
+Map creates a new list from an old one by applying a given function to each
+ input list element to generate the corresponding output list element.
+ The input list is unchanged.
+\end_layout
+
+\begin_layout Standard
+Fantom's static type system is not complex enough to infer the correct result
+ type for the output list.
+ The type will be available dynamically but to make static types checked
+ the result type must be treated as an 
+\family typewriter
+Obj
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Reduce works similarly.
+ Again the result type is an 
+\family typewriter
+Obj
+\family default
+.
+ The lack of precise type inference means that type casts or dynamic lookup
+ must be used to access the output value.
+\end_layout
+
+\begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Standard
+Functions are first-class objects (data values) in Fantom.
+ Methods wrap an underlying function.
+ Closures are written as a signature in 
+\family typewriter
+| |
+\family default
+ followed by a closure body in 
+\family typewriter
+{ }
+\family default
+.
+ There are no restrictions on what can be put inside a closure body: it
+ has identical syntax to a method body.
+\end_layout
+
+\begin_layout Standard
+The signature of a closure can as a shorthand use type inference to infer
+ parameter and/or return types.
+ These may then be omitted from the signature.
+\end_layout
+
+\begin_layout Standard
+Closures can capture variables in scope when the closure is created.
+ These can be local variables or object fields.
+ These variables are captured by reference, and can be read and written
+ from the closure.
+ Local variables in a function remain alive even if the function terminates
+ if they are captured by a closure that is alive.
+\end_layout
+
+\begin_layout Chapter
+It-Blocks and Declarative Programming
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:It-Blocks-and-Declarative"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Functional-Programming-and"
+
+\end_inset
+
+ described how Fantom uses closures to represent functions that are used
+ as data, for example as parameters to standard library functions.
+ 
+\end_layout
+
+\begin_layout Standard
+Closures in Fantom can be written with a number of shortcuts, but normally
+ consist of two parts: a signature in 
+\family typewriter
+| |
+\family default
+ followed by a closure body in 
+\family typewriter
+{ }
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Here we will look an extension of this syntax in which the signature is
+ omitted entirely, and some associated syntactic sugar for function calls,
+ which together make idiomatic Fantom using closures look very clean.
+ This is especially useful for declarative programming.
+\end_layout
+
+\begin_layout Section
+It-Blocks
+\end_layout
+
+\begin_layout Standard
+Where there are no parameters, or one parameter with type inferred, the
+ signature part of a closure is unnecessary.
+ Fantom allows this to be omitted entirely 
+\emph on
+in contexts where a function value is expected
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+A closure without signature and without any 
+\family typewriter
+return
+\family default
+ statement is called an 
+\emph on
+it-block
+\emph default
+ because the missing parameter can be used in the closure body as name 
+\emph on
+it
+\emph default
+.
+ Thus it-blocks are the ultimate compact way to write closures.
+\end_layout
+
+\begin_layout Standard
+When a method’s last parameter expects a closure it can be taken out of
+ the method call brackets and written immediately after the method call.
+ This syntax makes such constructions much more readable.
+ The 
+\family typewriter
+map
+\family default
+ method of a 
+\family typewriter
+List
+\family default
+ expects a function so this compact notation represents a list of squares.
+ All of these expressions mean the same thing in Fantom, and represent the
+ list 
+\family typewriter
+[1,4,9]
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+[1,2,3].map() {it*it}      /*preferred idiomatic form */
+\end_layout
+
+\begin_layout Plain Layout
+
+[1,2,3].map( {it*it} )
+\end_layout
+
+\begin_layout Plain Layout
+
+[1,2,3].map |n| {n*n}
+\end_layout
+
+\begin_layout Plain Layout
+
+[1,2,3].map |Int n| {return n*n}
+\end_layout
+
+\begin_layout Plain Layout
+
+[1,2,3].map (|Int n->Int| {return n*n}) /*form with no shortcuts*/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Slot lookup and assignment in it-blocks
+\end_layout
+
+\begin_layout Standard
+Inside an it-block closure the 
+\family typewriter
+it
+\family default
+ parameter is used for default lookup of field or method names just like
+ the object in a class:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+[1,2,3].map { negate }  =>   [-1,-2,-3]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The method name 
+\family typewriter
+negate
+\family default
+ is looked up as 
+\family typewriter
+it.negate
+\family default
+ in this it-block so this negates each list value.
+\end_layout
+
+\begin_layout Standard
+This slot lookup is particularly useful when an it-block is used 
+\emph on
+inside
+\emph default
+ a constructor.
+ In Fantom this is common because many of the API constructors take a closure
+ as optional last parameter of signature 
+\family typewriter
+|This|
+\family default
+.
+ The parameter type-name 
+\family typewriter
+This
+\family default
+ here is a special marker which represents the constructed object type and
+ indicates that an it-block closure is expected.
+ Note that in the constructor below 
+\family typewriter
+f
+\family default
+ represents the it-block, and 
+\family typewriter
+this
+\family default
+ binds to the constructed object.
+ The function call 
+\family typewriter
+f(this)
+\family default
+ thus applies the closure to the object.
+ 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+ // default constructor for fwt::Button accepts optional function f as parameter
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+ // f is usually a closure written immediately after the constructor call
+\end_layout
+
+\begin_layout Plain Layout
+
+ // as an it-block
+\end_layout
+
+\begin_layout Plain Layout
+
+ new make(|This|? f:= null) { if (f != null) f(this) }
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+ // constructor call with it-block initialisation
+\end_layout
+
+\begin_layout Plain Layout
+
+ Button { size = "100x100" }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If an it-block closure is supplied to the constructor the closure is called,
+ with its 
+\emph on
+it
+\emph default
+ parameter set to the constructed object, inside the object constructor.
+\end_layout
+
+\begin_layout Standard
+To see why this is useful remember that field and method names inside an
+ it-block are looked up against 
+\emph on
+it
+\emph default
+.
+ In this case 
+\emph on
+it
+\emph default
+ is the new Button object and so this is a convenient way to initialise
+ fields of a new class instance.
+\end_layout
+
+\begin_layout Standard
+In this example 
+\family typewriter
+Button.size
+\family default
+ is set to 
+\family typewriter
+100x100
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Inside the constructor the closure is given static permission to set (initialise
+) 
+\family typewriter
+const
+\family default
+ fields on the object.
+ So this is a way to parametrise newly created constant objects.
+ Note that the same operation would not work with the closure called outside
+ the constructor on the object instance, because at that time 
+\family typewriter
+const
+\family default
+ fields cannot be changed.
+\end_layout
+
+\begin_layout Subsection
+It-Add Statements (AKA comma operator)
+\end_layout
+
+\begin_layout Standard
+One final tweak of the it-block syntax is especially useful when it-blocks
+ are used to initalise construction of objects.
+ If an expression inside the it-block is terminated with a 
+\family typewriter
+,
+\family default
+ the expression is used as a parameter in an 
+\family typewriter
+it.add
+\family default
+ method call:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+x,   => it.add(x)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Idiomatically this allows it-blocks used to initialise constructors that
+ have a number of field assignments, followed by a number of calls to the
+ 
+\family typewriter
+add
+\family default
+ method.
+ This is useful in GUI programming as the following examples show.
+\end_layout
+
+\begin_layout Section
+With-blocks
+\end_layout
+
+\begin_layout Standard
+With-blocks superficially look and behave like it-blocks, but they are semantica
+lly very different.
+\end_layout
+
+\begin_layout Standard
+An it-block is a closure appended to a method expecting a closure, possibly
+ to a 
+\emph on
+constructor
+\emph default
+ (typically shortened to a class name).
+ Inside the closure the comma operator appended to an expression translates
+ to an 
+\family typewriter
+add
+\family default
+ method call on the constructed object because of the magic of a special
+ constructor that 
+\emph on
+expects a closure
+\emph default
+ as parameter and applies the closure to 
+\family typewriter
+this
+\family default
+ 
+\emph on
+inside
+\emph default
+ the constructor.
+ other statements can be used conveniently to set object fields because
+ a name that does not resolve locally will be matched against the closure
+ 
+\family typewriter
+it
+\family default
+ parameter which is, because of the form of the constructor, the same as
+ the constructor's 
+\family typewriter
+this
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+A
+\emph on
+ with-block
+\emph default
+ is an extension of this paradigm to a more general case, where an it-block
+ closure 
+\family typewriter
+clos
+\family default
+ is appended to any expression 
+\family typewriter
+exp
+\family default
+ 
+\emph on
+not
+\emph default
+ expecting a closure.
+ When this happens the expression's 
+\family typewriter
+with
+\family default
+ method 
+\family typewriter
+exp.with
+\family default
+ is implicitly used.
+ The effect of this is to apply the expression to the closure, returning
+ the original expression:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+clos(exp); exp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That is equivalent to the 
+\family typewriter
+with
+\family default
+ method (on 
+\family typewriter
+Obj
+\family default
+, inherited by every class) being defined: 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+virtual This with(|This| f)
+\end_layout
+
+\begin_layout Plain Layout
+
+{    
+\end_layout
+
+\begin_layout Plain Layout
+
+  f.call(this)
+\end_layout
+
+\begin_layout Plain Layout
+
+  return this
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ Parenthetically it is worth noting that because 
+\family typewriter
+with
+\family default
+ can be overridden with-block semantics is customisable on a per-class basis.
+\end_layout
+
+\begin_layout Standard
+For a simple example, incorporating the 
+\family typewriter
+,
+\family default
+ add operator: 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+[1,2] {3,4,} => [1,2].with { it.add(3); it.add(4) } => [1,2].add(3).add(4)
+\end_layout
+
+\end_inset
+
+ Here 
+\family typewriter
+{3,4,}
+\family default
+ is the with-block.
+ Compare this with: 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+List {1,2,3,4,} =>  /* error */
+\end_layout
+
+\end_inset
+
+ This does not compile because, unusually, the List class does not have
+ any constructor written specially to accept a closure.
+ Also the List class has special syntax for its constructor and no 
+\emph on
+make
+\emph default
+ method, so List on its own is not a valid expression.
+\end_layout
+
+\begin_layout Standard
+The semantic distinction between it-blocks and with-blocks is that an it-block
+ applied to a (closure accepting) constructor will operate on the constructed
+ object 
+\emph on
+inside
+\emph default
+ the constructor and therefore may initialise 
+\family typewriter
+const
+\family default
+ fields and objects.
+\end_layout
+
+\begin_layout Standard
+A with-block operates on an already constructed object and therefore cannot
+ change 
+\family typewriter
+const
+\family default
+ fields.
+\end_layout
+
+\begin_layout Standard
+Syntactically the two forms are identical.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+ClassName  <it-block contents> 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+ClassName
+\family default
+ written on its own will, if possible, result in an implicit call to its
+ constructor.
+ The semantics then depends on whether this accepts a closure parameter,
+ or whether it does not.
+\end_layout
+
+\begin_layout Section
+Declarative Programming Examples
+\end_layout
+
+\begin_layout Standard
+Here is how to define a top-level Window widget, containing three Button
+ widgets.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+class Main
+\end_layout
+
+\begin_layout Plain Layout
+
+{  
+\end_layout
+
+\begin_layout Plain Layout
+
+  Void main()
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    Window
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      it.title = "two Buttons"
+\end_layout
+
+\begin_layout Plain Layout
+
+      it.size = Size(100,200)
+\end_layout
+
+\begin_layout Plain Layout
+
+      Button { text = "A"},
+\end_layout
+
+\begin_layout Plain Layout
+
+      Button { text = "B"},
+\end_layout
+
+\begin_layout Plain Layout
+
+      Button { text = "C"}
+\end_layout
+
+\begin_layout Plain Layout
+
+    }.open
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+Window
+\family default
+ widget is initialised with an it-block that also uses it-add to add three
+ 
+\family typewriter
+Button
+\family default
+ widgets to the window.
+ The 
+\family typewriter
+add
+\family default
+ method is invoked by appending the 
+\family typewriter
+,
+\family default
+ operator to the relevant expression (the Buttons).
+ Note that as a convenience the 
+\emph on
+last
+\emph default
+ expression in the block is assumed it-add and does not require a 
+\family typewriter
+,
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Each Button widget is itself initialised on construction with a nested it-block
+ that sets the 
+\family typewriter
+text
+\family default
+ field of the widget.
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+open
+\family default
+ method of the top-level window starts the GUI event loop.
+\end_layout
+
+\begin_layout Standard
+User classes can be used in the same fashion as this example from the standard
+ Fantom desktop fwt example shows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+class DesktopDemo : Canvas  
+\end_layout
+
+\begin_layout Plain Layout
+
+{  
+\end_layout
+
+\begin_layout Plain Layout
+
+  Void main()
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    Window
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      it.title = "Desktop Demo"
+\end_layout
+
+\begin_layout Plain Layout
+
+      it.size = Size(600,400)
+\end_layout
+
+\begin_layout Plain Layout
+
+      DesktopDemo {},
+\end_layout
+
+\begin_layout Plain Layout
+
+    }.open
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  /* custom onPaint method for DesktopDemo not shown */
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This function constructs a 
+\family typewriter
+Window
+\family default
+ GUI widget and then calls its 
+\family typewriter
+open
+\family default
+ method which has the effect of starting the GUI event loop.
+\end_layout
+
+\begin_layout Standard
+The it-block that constructs the 
+\family typewriter
+Window
+\family default
+ initialises fields 
+\family typewriter
+title
+\family default
+ and 
+\family typewriter
+size
+\family default
+ on the 
+\family typewriter
+Window
+\family default
+ object and then calls the 
+\family typewriter
+add
+\family default
+ method of 
+\family typewriter
+Window
+\family default
+ to add the constructed object of type 
+\family typewriter
+DesktopDemo
+\family default
+ to the newly created window.
+ The 
+\family typewriter
+DesktopDemo
+\family default
+ object is sub-classed from 
+\family typewriter
+Canvas
+\family default
+ so this will add a 
+\family typewriter
+Canvas
+\family default
+ widget to the window.
+ Note that the it-block that initialises 
+\family typewriter
+DesktopDemo
+\family default
+ (whose constructor is inherited from 
+\family typewriter
+Canvas
+\family default
+) in this case contains no further initialisation.
+ This style can easily be used to add nested sub-widgets as is needed, either
+ from the standard API or user-defined.
+\end_layout
+
+\begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Standard
+Closures can be written compactly in Fantom as
+\emph on
+ it-blocks
+\emph default
+.
+ This notation combines with syntactic sugar that allows a last function
+ parameter to be pulled out of a function call's brackets and written without
+ brackets after the function.
+ It allows clean code when used with many API functions that accept functions
+ as parameters.
+\end_layout
+
+\begin_layout Standard
+Widgets, and many other Fantom API classes, have constructors that accept
+ an optional last parameter that is a closure called from inside the constructor.
+ That allows the closure to initialise object fields, even 
+\family typewriter
+const
+\family default
+ fields.
+\end_layout
+
+\begin_layout Standard
+Inside an it-block an expression terminated by 
+\family typewriter
+,
+\family default
+ is translated into a call of the 
+\family typewriter
+add method
+\family default
+ on the 
+\family typewriter
+it
+\family default
+ parameter.
+\end_layout
+
+\begin_layout Standard
+GUI code typically consists of nested 
+\family typewriter
+make
+\family default
+ and 
+\family typewriter
+add
+\family default
+ calls with initialisation and benefits from this notation.
+ Closures are written using field assignment to initialise each widget,
+ and 
+\family typewriter
+,
+\family default
+ after sub-widgets constructors - themselves using it-blocks - to add sub-widget
+s.
+\end_layout
+
+\begin_layout Standard
+Any expression not expecting a closure, with it-block appended, forms a
+ 
+\emph on
+with-block
+\emph default
+.
+ The with-block closure is called with the expression as parameter.
+ This is a post-construction equivalent of an it-block appended to constructor.
+\end_layout
+
+\begin_layout Chapter
+Concurrency
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Concurrency"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Modern CPUs have 4, 8, or more CPU threads and to use them efficiently requires
+ a program that is 
+\emph on
+concurrent
+\emph default
+.
+ Concurrency is also useful in GUIs to provide real-time response while
+ simultaneously executing background code.
+\end_layout
+
+\begin_layout Standard
+Fantom uses an Actor framework (as used in Erlang) to control concurrency.
+ Actors run on different concurrently executing threads.
+ Communication between actors (and therefore possibly between concurrent
+ threads) is via messages.
+ Fantom forces messages to be 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "immutable"
+description "an expression that cannot be changed. Eitehr const, or result of toImmutable method"
+
+\end_inset
+
+ , something that greatly reduces the likelihood of obscure errors due to
+ shared mutable state between concurrent threads.
+\end_layout
+
+\begin_layout Standard
+Actors are defined by extending the 
+\emph on
+Actor
+\emph default
+ class with a concrete method.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Obj receive(Obj msg)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This method contains the code that defines what an actor does when it receives
+ message 
+\family typewriter
+msg
+\family default
+.
+ The return value is the 
+\emph on
+reply
+\emph default
+ message that can optionally be read by the sender of the original message.
+\end_layout
+
+\begin_layout Standard
+This paradigm allows both synchronous (where the sender waits for the reply)
+ and asynchronous (where the reply is ignored) concurrency.
+\end_layout
+
+\begin_layout Standard
+Given an actor you can send messages to it, and wait optionally for reply
+ messages coming back from it, as in Example 1 below.
+ Actors are viewed by Fantom as immutable, and can be passed by reference
+ to other actors in messages, as in Example 2.
+ So this framework allows arbitrarily complex networks of concurrent processes
+ that pass messages.
+\end_layout
+
+\begin_layout Standard
+Actors are controlled by an object of class 
+\emph on
+ActorPool
+\emph default
+ that automatically schedules actors onto concurrent threads as required
+ by the current message load.
+\end_layout
+
+\begin_layout Section
+Example 1 - Concurrent Computation with Results Collected
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Actors-to-calculate"
+
+\end_inset
+
+ illustrates the communication with a number of actors from the code in
+ Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Prime-Numbers"
+
+\end_inset
+
+.
+ The 
+\family typewriter
+main
+\family default
+ thread creates a large number of actors, each of which computes concurrently
+ the primality of the integer it is sent, the Boolean results are passed
+ back to 
+\family typewriter
+main
+\family default
+ and collated.
+ The arrows in the Figure represent messages.
+ In Fantom code messages are processed by two methods from module 
+\emph on
+concurrent
+\emph default
+:
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+fut := a.send(msg) 
+\family default
+//sends message mess to Actor 
+\family typewriter
+a
+\family default
+, returning Future 
+\family typewriter
+fut
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+fut.get
+\family default
+ // waits for the reply to message 
+\family typewriter
+m
+\family default
+sg, which by definition is equal to 
+\family typewriter
+a.receive(msg)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement tbh
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[scale=0.8,->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+\end_layout
+
+\begin_layout Plain Layout
+
+  thick,main node/.style={circle,fill=blue!20,draw,font=
+\backslash
+sffamily
+\backslash
+Large
+\backslash
+bfseries}]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+definecolor{lavander}{cmyk}{0,0.48,0,0} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+definecolor{violet}{cmyk}{0.79,0.88,0,0} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+definecolor{burntorange}{cmyk}{0,0.52,1,0}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+redtran{red!30} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+bluetran{blue!30}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{actor}=[draw,circle,red, left color=
+\backslash
+redtran,                        
+\end_layout
+
+\begin_layout Plain Layout
+
+text=red,font=
+\backslash
+sffamily
+\backslash
+small,minimum width=20pt] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{main1}=[rectangle, minimum height=6cm,draw, blue, rounded corners,
+                      
+\end_layout
+
+\begin_layout Plain Layout
+
+thin,bottom color=
+\backslash
+bluetran, top color=white,                      
+\end_layout
+
+\begin_layout Plain Layout
+
+text=black,font=
+\backslash
+sffamily
+\backslash
+small, minimum width=2cm] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (9,0) -- +(8,0) -- +(8,2)-- +(0,2) -- cycle;
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (9.5,0.5)[dashed]-> node [right=20] {
+\backslash
+emph{future}.get} +(2,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (9.5,1.5)-> node [right=20] {
+\backslash
+emph{actor}.send(
+\backslash
+emph{msg})} +(2,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[main1] (1) at (0,0) {Main Thread};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[actor] (2) at (6cm,0) {Actor2};   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[actor] (3) at (6cm, -4cm) {Actor3};   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[actor] (4) at (6cm, 4cm) {Actor1};   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path[every node/.style={font=
+\backslash
+sffamily
+\backslash
+small}]     
+\end_layout
+
+\begin_layout Plain Layout
+
+(4) edge [bend left=15,dashed] node [right=1] {false} (1)         
+\end_layout
+
+\begin_layout Plain Layout
+
+(1) edge node [above=5,midway] {100} (4)                
+\end_layout
+
+\begin_layout Plain Layout
+
+(2) edge [bend left=10,dashed] node [below] {true} (1)         
+\end_layout
+
+\begin_layout Plain Layout
+
+(1) edge node [above=-1] {101} (2)       
+\end_layout
+
+\begin_layout Plain Layout
+
+(1) edge  node [above,right=3] {102} (3)         
+\end_layout
+
+\begin_layout Plain Layout
+
+(3) edge [bend left=12,dashed] node [below] {false} (1);         
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Actors to calculate primes concurrently
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Actors-to-calculate"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\footnotesize\ttfamily},caption={Example 1},captionpos=b,float=htbp,frame=lines,showspaces=false,showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+using concurrent
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class PrimeNumbers
+\end_layout
+
+\begin_layout Plain Layout
+
+{  
+\end_layout
+
+\begin_layout Plain Layout
+
+  Int startNumber := 100000000000  
+\end_layout
+
+\begin_layout Plain Layout
+
+  Int numberToTest := 1000
+\end_layout
+
+\begin_layout Plain Layout
+
+  Str checkInterval := "0.3sec"
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  Void main()
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    p := PrimeNumbers()
+\end_layout
+
+\begin_layout Plain Layout
+
+    p.test(10)
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  static Bool isPrime( Int primeCandidate)
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    for (i := 2; i < (primeCandidate.toFloat).sqrt.ceil.toInt+1; i++)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      if (primeCandidate % i == 0) return false
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    return true
+\end_layout
+
+\begin_layout Plain Layout
+
+  }     
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  Void test(Int numOfThreads)
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    apool := ActorPool {maxThreads = numOfThreads}
+\end_layout
+
+\begin_layout Plain Layout
+
+    [Int:Actor] actors := [:]
+\end_layout
+
+\begin_layout Plain Layout
+
+    [Int:Future] futures := [:]
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    echo("creating Actors...")
+\end_layout
+
+\begin_layout Plain Layout
+
+    for (pc := startNumber; pc < startNumber+numberToTest; pc++)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      actors[pc] = Actor(apool, |Int i->Bool|{isPrime(i)} )
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    t1 := Duration.nowTicks
+\end_layout
+
+\begin_layout Plain Layout
+
+    actors.each |a, pc| {futures[pc] = a.send(pc)}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    num := 0
+\end_layout
+
+\begin_layout Plain Layout
+
+    apool.stop //no new messages allowed to actors, allows pool to be done
+\end_layout
+
+\begin_layout Plain Layout
+
+    while (! apool.isDone)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      num = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+      futures.each { if (it.isDone) num++ }
+\end_layout
+
+\begin_layout Plain Layout
+
+      echo("$num actors finished")
+\end_layout
+
+\begin_layout Plain Layout
+
+      try
+\end_layout
+
+\begin_layout Plain Layout
+
+        apool.join(Duration.fromStr(checkInterval))
+\end_layout
+
+\begin_layout Plain Layout
+
+      catch(TimeoutErr e) {}
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    elapsedMs := (Duration.nowTicks - t1)/1000000
+\end_layout
+
+\begin_layout Plain Layout
+
+    num = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+    futures.each { if (it.get) num++ }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    echo("Finished in ${elapsedMs}ms using $numOfThreads threads.") 
+\end_layout
+
+\begin_layout Plain Layout
+
+    echo("$num primes found in $numberToTest numbers tested")  
+\end_layout
+
+\begin_layout Plain Layout
+
+  }  
+\end_layout
+
+\begin_layout Plain Layout
+
+}  
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Prime Numbers
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Prime-Numbers"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Each Actor receives a single message (the 
+\emph on
+Int
+\emph default
+ for it to check) and returns a Boolean value indicating primality using
+ method 
+\family typewriter
+isPrime
+\family default
+, which is set to be the code executed by the actor on receiving a message.
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+main
+\family default
+ thread operates as follows:
+\end_layout
+
+\begin_layout Enumerate
+Create an 
+\emph on
+ActorPool
+\emph default
+ object to control the actors:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+apool := ActorPool {maxThreads = numOfThreads}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Create all actors, store them in Map 
+\family typewriter
+actors
+\family default
+ keyed by the integer they will check for primality.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+actors[pc] = Actor(apool, |Int i->Bool|{isPrime(i)} )
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Send each actor its integer 
+\family typewriter
+pc
+\family default
+ (a Fantom 
+\emph on
+Int
+\emph default
+) to check, storing the corresponding 
+\emph on
+Future
+\emph default
+ object (from which the reply message can be read) in Map 
+\family typewriter
+futures
+\family default
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+futures[pc] = a.send(pc)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Mark the 
+\emph on
+ActorPool
+\emph default
+ (
+\family typewriter
+apool
+\family default
+) as stopped.
+ This signals that no more messages can be sent to the Actors, and allows
+ the 
+\family typewriter
+apool
+\family default
+ to reply with 
+\family typewriter
+isDone = true
+\family default
+ when all actors have finished processing their messages.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\family typewriter
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+apool.stop
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Loop waiting for actors to finish.
+ Each loop first counts the number of finished actors and prints this:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+num = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+futures.each { if (it.isDone) num++ }
+\end_layout
+
+\begin_layout Plain Layout
+
+echo("$num actors finished")	
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+then waits for either all actors to finish or a given time (
+\family typewriter
+checkInterval
+\family default
+) to elapse.
+ The 
+\family typewriter
+ActorPool.join
+\family default
+ method has a timeout that throws 
+\emph on
+TimeoutError
+\emph default
+ if the actors are still not finished at the end of the given interval and
+ implements this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+try
+\end_layout
+
+\begin_layout Plain Layout
+
+  apool.join(Duration.fromStr(checkInterval))
+\end_layout
+
+\begin_layout Plain Layout
+
+catch(TimeoutErr e) {}	
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+When all actors have finished 
+\family typewriter
+get
+\family default
+ obtains their results to display the total number of primes found:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+futures.each { if (it.get) num++ }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+This code is elaborate to illustrate different ways of interacting with
+ an 
+\emph on
+ActorPool
+\emph default
+.
+ If the aim were just to obtain all the results, successive calls to 
+\family typewriter
+get
+\family default
+ on each of the 
+\family typewriter
+Future
+\family default
+ objects would return the correct values, waiting as necessary for each
+ actor to finish:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+futures.each { if (it.get) num++ }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The maximum number of threads used by the 
+\family typewriter
+ActorPool
+\family default
+ is given as the parameter 
+\family typewriter
+numOfThreads
+\family default
+ of 
+\family typewriter
+test
+\family default
+ in 
+\family typewriter
+main
+\family default
+.
+ As this number is changed from 1 upwards it results in faster execution
+ with more concurrency.
+ For example, on an i7 CPU with 8 threads the execution time will continue
+ to decrease until 
+\family typewriter
+numOfThreads
+\family default
+ is 8 after which increases make no difference, as the extra actors are
+ scheduled sequentially on the available threads.
+ 
+\end_layout
+
+\begin_layout Section
+Example 2 - Output from a long-running task
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[scale=0.8,->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+\end_layout
+
+\begin_layout Plain Layout
+
+  thick,main node/.style={circle,fill=blue!20,draw,font=
+\backslash
+sffamily
+\backslash
+Large
+\backslash
+bfseries}]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+definecolor{lavander}{cmyk}{0,0.48,0,0} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+definecolor{violet}{cmyk}{0.79,0.88,0,0} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+definecolor{burntorange}{cmyk}{0,0.52,1,0}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+redtran{red!30} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+bluetran{blue!30}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{actor}=[draw,circle,red, left color=
+\backslash
+redtran,                        
+\end_layout
+
+\begin_layout Plain Layout
+
+text=red,font=
+\backslash
+sffamily
+\backslash
+small,minimum width=20pt] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{store}=[draw,rectangle,green, left color=green,              
+          
+\end_layout
+
+\begin_layout Plain Layout
+
+text=black,font=
+\backslash
+sffamily
+\backslash
+small,minimum width=20pt] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{main1}=[rectangle, minimum height=4cm,draw, 
+\end_layout
+
+\begin_layout Plain Layout
+
+blue, rounded corners,                      
+\end_layout
+
+\begin_layout Plain Layout
+
+thin,bottom color=
+\backslash
+bluetran, top color=white,                      
+\end_layout
+
+\begin_layout Plain Layout
+
+text=black,font=
+\backslash
+sffamily
+\backslash
+small, minimum width=2cm] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (9,-3) -- +(8,0) -- +(8,2)-- +(0,2) -- cycle;
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (9.5,-2.5)[dashed]-> node [right=20] {
+\backslash
+emph{future}.get} +(2,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (9.5,-1.5)-> node [right=20] {
+\backslash
+emph{actor}.send(
+\backslash
+emph{msg})} +(2,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[main1] (1) at (0,0) {Main Thread};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[actor] (2) at (6cm,-2.5cm) {
+\backslash
+parbox{1cm}{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering Actor 
+\backslash
+emph{acalc}}};   
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[actor] (3) at (6cm, 2.5cm) {
+\backslash
+parbox{1cm}{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering Actor 
+\backslash
+emph{areply}}}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[store] (4) at (12cm, 2.5cm) {
+\backslash
+parbox{1cm}{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+emph{areply} state}};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path[<->,green,text=black,font=
+\backslash
+sffamily
+\backslash
+small] (3) edge node {
+\backslash
+parbox{2cm}{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering Actor.locals Map}} (4);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path[every node/.style={font=
+\backslash
+sffamily
+\backslash
+small}] 
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+(2) edge node [right=1,midway] {nextPrime} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+                     
+\end_layout
+
+\begin_layout Plain Layout
+
+(1.-40) edge node [below=1,midway] {} (2)    
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+(1) edge  node [above=1] {""} (3)         
+\end_layout
+
+\begin_layout Plain Layout
+
+(3) edge [bend left=12,dashed] node [below=2] {
+\backslash
+parbox{1.5cm}{
+\backslash
+centering chars to print}} (1);         
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Actors to return real-time output from asynchronous long-running process
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Actors-to-return"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Actors-to-return"
+
+\end_inset
+
+ illustrates the messages sent between actors when the 
+\family typewriter
+main()
+\family default
+ thread creates a long-running process defined by a Fantom function running
+ on an Actor, as in Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Long-running-task"
+
+\end_inset
+
+.
+ Standard output from the program is returned to the 
+\family typewriter
+main()
+\family default
+ thread and displayed there.
+ In Fantom actors all share the same standard output as the main thread,
+ so that a similar effect could be obtained more simply by using 
+\family typewriter
+echo
+\family default
+ in the actor.
+ The structure presented here is useful because the output from the long-running
+ process can be manipulated programmatically by the main thread.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\footnotesize\ttfamily},caption={Example 2},captionpos=b,float,frame=lines,showspaces=false,showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+using concurrent
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class PrintPrimesAsync
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+  Int startNumber := 10000000000000
+\end_layout
+
+\begin_layout Plain Layout
+
+  static const Int numberToTest := 10
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  Void main()
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    apool := ActorPool {maxThreads = 2}      
+\end_layout
+
+\begin_layout Plain Layout
+
+    areply := Actor(apool, |Obj o->Obj?|{printFunc(o)})
+\end_layout
+
+\begin_layout Plain Layout
+
+    acalc := Actor(apool, |Int pc->Void| {findPrimes(pc, numberToTest, areply)}
+ )
+\end_layout
+
+\begin_layout Plain Layout
+
+      
+\end_layout
+
+\begin_layout Plain Layout
+
+    acalc.send(startNumber) // start asynch program
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    while (true)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      s = areply.sendLater(Duration.fromStr("0.1sec"),"").get
+\end_layout
+
+\begin_layout Plain Layout
+
+      Env.cur.out.writeChars("$s")
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+  static Str? printFunc(Obj s) 
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    h :=  Actor.locals.get("printFuncState","") as Str
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (s is Int)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      Actor.locals["printFuncState"] = "$h$s.toStr
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+      return(null)
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    else 
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      Actor.locals["printFuncState"] = ""
+\end_layout
+
+\begin_layout Plain Layout
+
+      return h
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+  static Void findPrimes( Int start, Int numToPrint, Actor printFuncActor)
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    pr := start
+\end_layout
+
+\begin_layout Plain Layout
+
+    i := 0
+\end_layout
+
+\begin_layout Plain Layout
+
+    while (i < numToPrint)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      pr++
+\end_layout
+
+\begin_layout Plain Layout
+
+      while (!isPrime(pr)) pr++
+\end_layout
+
+\begin_layout Plain Layout
+
+      printFuncActor.send(pr)
+\end_layout
+
+\begin_layout Plain Layout
+
+      i++
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+  static Bool isPrime( Int pc)
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    for (i := 2; i < (pc.toFloat).sqrt.ceil.toInt+1; i++)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      if (pc % i == 0) return false
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    return true
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Long-running task
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Long-running-task"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The 
+\family typewriter
+main
+\family default
+ thread creates two actors in order to run an asynchronous program and print
+ the output in real time.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+areply := Actor(apool, |Obj o->Obj?|{printFunc(o)})
+\end_layout
+
+\begin_layout Plain Layout
+
+acalc := Actor(apool, |Int pc->Void| {findPrimes(pc, numberToTest, areply)}
+ )
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Actor 
+\family typewriter
+acalc
+\family default
+ runs continuously and outputs prime numbers from time to time.
+ It sends these back to 
+\family typewriter
+main
+\family default
+ via the second actor 
+\family typewriter
+areply
+\family default
+.
+ Actor reply accepts messages from both 
+\family typewriter
+acalc
+\family default
+ and 
+\family typewriter
+main
+\family default
+.
+ Integers sent from 
+\family typewriter
+acalc
+\family default
+ are interpreted as numbers to print, and strings from 
+\family typewriter
+main
+\family default
+ are interpreted as requests to output all queued characters.
+ The characters remaining to print are queued in internal 
+\family typewriter
+areply
+\family default
+ state 
+\family typewriter
+Actor.locals
+\family default
+ and returned to 
+\family typewriter
+main
+\family default
+ as a reply to an empty 
+\emph on
+Str
+\emph default
+ message sent from 
+\family typewriter
+main
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+This communication structure allows data to be sent back from an actor to
+ the main program but does not synchronise.
+ The main program must repeatedly poll 
+\family typewriter
+areply
+\family default
+ by sending it a message and waiting for the reply.
+ The code here inserts a 0.1 second delay between each successive poll so
+ that the main thread does not hog CPU.
+ This is good practice, see point 7 below.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+while (true)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+  s = areply.sendLater(100ms),"").get
+\end_layout
+
+\begin_layout Plain Layout
+
+  Env.cur.out.writeChars("$s")
+\end_layout
+
+\begin_layout Plain Layout
+
+}	
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The 
+\family typewriter
+acalc
+\family default
+ actor is given a 
+\family typewriter
+receive
+\family default
+ function, which defines its operation:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+acalc := Actor(apool, |Int pc->Void| {findPrimes(pc, numberToTest, areply)}
+ )
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The closure used here to define the 
+\family typewriter
+acalc
+\family default
+ actor must be immutable.
+ This is so because 
+\family typewriter
+findPrimes
+\family default
+ is static, and its parameters: 
+\family typewriter
+pc
+\family default
+ is passed to the closure, 
+\family typewriter
+numberToTest
+\family default
+ is static, 
+\family typewriter
+areply
+\family default
+ is a (constant) actor.
+\end_layout
+
+\begin_layout Enumerate
+The 
+\family typewriter
+areply
+\family default
+ actor must store the characters sent to it from 
+\family typewriter
+acalc
+\family default
+ so that they can be output in reply to a message from 
+\family typewriter
+main
+\family default
+.
+ This is done using 
+\family typewriter
+Actor.locals
+\family default
+ a special Map that holds internal state to the actor:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+h :=  Actor.locals.get("printFuncState","") as Str
+\end_layout
+
+\begin_layout Plain Layout
+
+if (s is Int)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+   Actor.locals["printFuncState"] = "$h$s.toStr
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+   return(null)
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+This code requires two hardware threads to run successfully (for example
+ a dual CPU).
+ Actor 
+\family typewriter
+acalc
+\family default
+ will run continuously on whichever thread it is scheduled.
+ Actor 
+\family typewriter
+areply
+\family default
+ will receive queued messages but not process them unless it can run on
+ another hardware thread.
+ It requires very little time to process each message so will not run continuous
+ly.
+ The main thread sleeps in between each time it polls 
+\family typewriter
+areply
+\family default
+, so can be successfully scheduled on the same thread as 
+\family typewriter
+areply
+\family default
+.
+ Actors have no notion of time-slice multitasking on granularity smaller
+ than processing a message.
+ Normally actors will process incoming messages quickly so that scheduling
+ on a per message basis is fine.
+ Note that in this example 
+\family typewriter
+acalc
+\family default
+ runs forever having been sent just one message and so is atypical.
+\end_layout
+
+\begin_layout Enumerate
+This example illustrates how the 
+\emph on
+Future
+\emph default
+ returned from a message send command need not be used if the communication
+ is unidirectional and so a reply is not needed.
+\end_layout
+
+\begin_layout Section
+Example 3 - Interaction with a GUI
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[scale=0.8,->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+\end_layout
+
+\begin_layout Plain Layout
+
+  thick,main node/.style={circle,fill=blue!20,draw,font=
+\backslash
+sffamily
+\backslash
+Large
+\backslash
+bfseries}]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+definecolor{lavander}{cmyk}{0,0.48,0,0} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+definecolor{violet}{cmyk}{0.79,0.88,0,0} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+definecolor{burntorange}{cmyk}{0,0.52,1,0}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+redtran{red!30} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+def
+\backslash
+bluetran{blue!30}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{actor}=[draw,circle,red, left color=
+\backslash
+redtran,                        
+\end_layout
+
+\begin_layout Plain Layout
+
+text=red,font=
+\backslash
+sffamily
+\backslash
+small,minimum width=20pt] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{store}=[draw,rectangle,green, left color=green,              
+          
+\end_layout
+
+\begin_layout Plain Layout
+
+text=black,font=
+\backslash
+sffamily
+\backslash
+small,minimum width=20pt] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{main1}=[rectangle, minimum height=4cm,draw, 
+\end_layout
+
+\begin_layout Plain Layout
+
+blue, rounded corners,                      
+\end_layout
+
+\begin_layout Plain Layout
+
+thin,bottom color=
+\backslash
+bluetran, top color=white,                      
+\end_layout
+
+\begin_layout Plain Layout
+
+text=black,font=
+\backslash
+sffamily
+\backslash
+small, minimum width=2cm] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{update}=[rectangle, minimum height=1cm,draw, 
+\end_layout
+
+\begin_layout Plain Layout
+
+blue, rounded corners,                      
+\end_layout
+
+\begin_layout Plain Layout
+
+thin,bottom color=
+\backslash
+bluetran, top color=white,                      
+\end_layout
+
+\begin_layout Plain Layout
+
+text=black,font=
+\backslash
+sffamily
+\backslash
+small, minimum width=2cm] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (9,-3) -- +(8,0) -- +(8,2)-- +(0,2) -- cycle;
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (9.5,-2.5)[dashed,green,text=black]-> node [right=20] {Map written inside
+ make} +(2,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (9.5,-1.5)-> node [right=20] {
+\backslash
+emph{actor}.send(
+\backslash
+emph{msg})} +(2,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[update] (5) at (6,-2) {update};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[main1] (1) at (0,0) {Main Thread};
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[actor] (3) at (6cm, 2.5cm) {
+\backslash
+parbox{1cm}{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering Actor 
+\backslash
+emph{Clock}}}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[store] (4) at (12cm, 2.5cm) {
+\backslash
+parbox{1cm}{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering 
+\backslash
+emph{Clock} state}};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (1.-10)[dashed,green,text=black,font=
+\backslash
+sffamily
+\backslash
+small] -> node[below=22] 
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\backslash
+parbox{7cm}{Actor.locals[handle]}} (4) ;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path[<->,green,text=black,font=
+\backslash
+sffamily
+\backslash
+small] (3) edge node {
+\backslash
+parbox{2cm}{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering Actor.locals Map}} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+(4) edge node[right=1] {Actors.local[handle]} (5);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path[every node/.style={font=
+\backslash
+sffamily
+\backslash
+small}] 
+\end_layout
+
+\begin_layout Plain Layout
+
+(5) edge  node [right] {
+\backslash
+parbox{1.3cm}{
+\backslash
+centering "update" 
+\backslash
+
+\backslash
+ after 1s}} (3) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(1) edge  node [above=5] {
+\backslash
+parbox{1.3cm}{
+\backslash
+centering "update" 
+\backslash
+
+\backslash
+ after 1s}} (3) ;         
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Actor with Desktop.callAsync
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Actor-for-gui"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The previous example shows how to capture output from a long-running task.
+ Typically this would be done inside a GUI, with the GUI event loop replacing
+ the 
+\family typewriter
+main
+\family default
+ thread.
+ One way to implement this would to replace the 
+\family typewriter
+main
+\family default
+ thread 
+\family typewriter
+areply
+\family default
+ poll in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Actors-to-return"
+
+\end_inset
+
+ by a polling function running in the GUI event loop at fixed intervals.
+ A much easier solution is available using the Fantom 
+\emph on
+Desktop
+\emph default
+ class from module 
+\emph on
+Fwt
+\emph default
+.
+ A special function 
+\family typewriter
+Desktop.callAsync
+\family default
+ is designed to be static and can be called by any actor.
+ This allows any actor directly to interact with the GUI by posting an immutable
+ callback which is processed by the event queue in the Desktop UI thread
+ - typically this is the 
+\family typewriter
+main
+\family default
+ thread and not an actor.
+\end_layout
+
+\begin_layout Standard
+The trick in this example is how to obtain the necessary communication between
+ the callback and the UI.
+ The callback cannot directly reference mutable UI state - it must be immutable.
+ But it 
+\emph on
+can
+\emph default
+ reference its own actor's 
+\family typewriter
+Actor.locals
+\family default
+ internal state, and this is mutable, although Fantom treats this special
+ actor instance field as 
+\emph on
+immutable
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Using something wrapped by 
+\family typewriter
+Actor.locals
+\family default
+ answers half the problem: how the callback can operate on mutable state.
+ But how can private actor local state contain a UI widget? After all, we
+ cannot send a mutable reference to an actor, nor can we create a mutable
+ reference in any actor field.
+\end_layout
+
+\begin_layout Standard
+The answer is that in the actor's constructor, before the actor itself starts
+ execution (on some foreign thread) anything can be written into the 
+\family typewriter
+Actor.locals
+\family default
+ Map from the main thread under some known key, and then accessed by the
+ actor, and also by the callback.
+ 
+\end_layout
+
+\begin_layout Standard
+the 
+\begin_inset CommandInset href
+LatexCommand href
+name "clock example"
+target "http://fantom.org/doc/examples/fwt-clock.html"
+
+\end_inset
+
+ for 
+\emph on
+fwt
+\emph default
+ under the standard documentation is shown in Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Clock-GUI-communication"
+
+\end_inset
+
+ and illustrates this example.
+ It works as follows:
+\end_layout
+
+\begin_layout Itemize
+Construct an actor 
+\family typewriter
+act
+\family default
+ in the UI thread
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+clock := Clock(display)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Inside the actor constructor store the UI object with state that needs to
+ be accessed (typically a widget 
+\family typewriter
+widget
+\family default
+) in 
+\family typewriter
+Actor.locals
+\family default
+ under a unique known constant (Str) handle 
+\family typewriter
+handle
+\family default
+, pass this handle to the actor, or else as here give it to the actor at
+ compile-time as a 
+\family typewriter
+const
+\family default
+ field.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+new make(Label label) : super(ActorPool())
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Clock instance must be created by the main UI thread,
+\end_layout
+
+\begin_layout Plain Layout
+
+    // which is where we need to cache the label
+\end_layout
+
+\begin_layout Plain Layout
+
+    Actor.locals[handle] = label
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // send the first clock-tick
+\end_layout
+
+\begin_layout Plain Layout
+
+    sendLater(1sec, updateMsg)
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Inside the receive function of actor 
+\family typewriter
+act
+\family default
+ call 
+\family typewriter
+Desktop.callAsync
+\family default
+ with a immutable closure 
+\family typewriter
+update
+\family default
+.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+if (msg == updateMsg)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      Desktop.callAsync |->| { update }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+      // send the next clock-tick
+\end_layout
+
+\begin_layout Plain Layout
+
+      sendLater(1sec, updateMsg)
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Closure 
+\family typewriter
+update
+\family default
+ will be queued on the UI event queue and execute in the UI thread.
+\end_layout
+
+\begin_layout Itemize
+Inside closure 
+\family typewriter
+update
+\family default
+ the reference to the actor's 
+\family typewriter
+Actor.locals
+\family default
+ Map can be used.
+ Read 
+\family typewriter
+Actor.locals[handle]
+\family default
+ to retrieve 
+\family typewriter
+widget
+\family default
+, then operate on 
+\family typewriter
+widget
+\family default
+ to read or mutate UI state.
+ Note that 
+\family typewriter
+update
+\family default
+ is written in this example, for convenience, as a method of class 
+\family typewriter
+Clock
+\family default
+ which extends 
+\family typewriter
+Actor
+\family default
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Void update()
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    label := Actor.locals[handle] as Label
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (label != null)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      time := Time.now.toLocale("k:mm:ss a")
+\end_layout
+
+\begin_layout Plain Layout
+
+      label.text = "It is now $time"
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Data from 
+\family typewriter
+act
+\family default
+ can be passed to the UI via bound parameters in
+\family typewriter
+ update
+\family default
+ (good practice) or additional objects shared between the actor and 
+\family typewriter
+update
+\family default
+ and stored in 
+\family typewriter
+Actor.locals
+\family default
+ (bad practice).
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "frame=lines,showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+using concurrent
+\end_layout
+
+\begin_layout Plain Layout
+
+using fwt
+\end_layout
+
+\begin_layout Plain Layout
+
+using gfx
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+**
+\end_layout
+
+\begin_layout Plain Layout
+
+** Display a clock label and update from a background task
+\end_layout
+
+\begin_layout Plain Layout
+
+** using an actor.
+\end_layout
+
+\begin_layout Plain Layout
+
+**
+\end_layout
+
+\begin_layout Plain Layout
+
+const class Clock : Actor
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+  **
+\end_layout
+
+\begin_layout Plain Layout
+
+  ** the only message we understand...
+\end_layout
+
+\begin_layout Plain Layout
+
+  **
+\end_layout
+
+\begin_layout Plain Layout
+
+  static const Str updateMsg := "update"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  **
+\end_layout
+
+\begin_layout Plain Layout
+
+  ** generate a unique handle for this actor
+\end_layout
+
+\begin_layout Plain Layout
+
+  **
+\end_layout
+
+\begin_layout Plain Layout
+
+  const Str handle := Uuid().toStr
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  **
+\end_layout
+
+\begin_layout Plain Layout
+
+  ** create a Clock that updates a UI Label
+\end_layout
+
+\begin_layout Plain Layout
+
+  **
+\end_layout
+
+\begin_layout Plain Layout
+
+  new make(Label label) : super(ActorPool())
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    // Clock instance must be created by the main UI thread,
+\end_layout
+
+\begin_layout Plain Layout
+
+    // which is where we need to cache the label
+\end_layout
+
+\begin_layout Plain Layout
+
+    Actor.locals[handle] = label
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // send the first clock-tick
+\end_layout
+
+\begin_layout Plain Layout
+
+    sendLater(1sec, updateMsg)
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  **
+\end_layout
+
+\begin_layout Plain Layout
+
+  ** receive a message in actor's own pool thread
+\end_layout
+
+\begin_layout Plain Layout
+
+  **
+\end_layout
+
+\begin_layout Plain Layout
+
+  override Obj? receive(Obj? msg)
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    // assuming we recognize the message, have the
+\end_layout
+
+\begin_layout Plain Layout
+
+    // UI thread execute an update (with this actor's
+\end_layout
+
+\begin_layout Plain Layout
+
+    // update method, below)
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (msg == updateMsg)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      Desktop.callAsync |->| { update }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+      // send the next clock-tick
+\end_layout
+
+\begin_layout Plain Layout
+
+      sendLater(1sec, updateMsg)
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    return null
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  **
+\end_layout
+
+\begin_layout Plain Layout
+
+  ** Must be called from the UI thread; will look up
+\end_layout
+
+\begin_layout Plain Layout
+
+  ** our label using the const handle, and set its
+\end_layout
+
+\begin_layout Plain Layout
+
+  ** text with the current time.
+\end_layout
+
+\begin_layout Plain Layout
+
+  **
+\end_layout
+
+\begin_layout Plain Layout
+
+  Void update()
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    label := Actor.locals[handle] as Label
+\end_layout
+
+\begin_layout Plain Layout
+
+    if (label != null)
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      time := Time.now.toLocale("k:mm:ss a")
+\end_layout
+
+\begin_layout Plain Layout
+
+      label.text = "It is now $time"
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  static Void main()
+\end_layout
+
+\begin_layout Plain Layout
+
+  {
+\end_layout
+
+\begin_layout Plain Layout
+
+    // label to update
+\end_layout
+
+\begin_layout Plain Layout
+
+    display := Label
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      text   = "Does anybody know what time it is?"
+\end_layout
+
+\begin_layout Plain Layout
+
+      halign = Halign.center
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // clock actor
+\end_layout
+
+\begin_layout Plain Layout
+
+    clock := Clock(display)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    Window
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+      size = Size(200,100)
+\end_layout
+
+\begin_layout Plain Layout
+
+      title = "Clock Actor"
+\end_layout
+
+\begin_layout Plain Layout
+
+      display,
+\end_layout
+
+\begin_layout Plain Layout
+
+    }.open
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Clock GUI communication
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Clock-GUI-communication"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Actors In Detail
+\end_layout
+
+\begin_layout Standard
+Actors are useful because they hide details of concurrency synchronisation
+ and allow you to write your code at an abstract level.
+ They just work, and tend to suffer less from race and lock conditions than
+ more general concurrent code.
+\end_layout
+
+\begin_layout Standard
+Sometimes it is helpful to understand more about the underlying implementation.
+ In Fantom each Actor object (referred to throughout this section as an
+ actor) is associated with an ActorPool object which controls scheduling
+ and is given by the programmer a fixed number of threads as a resource
+ that can, but need not, be used.
+ These threads are in fact Java Threads in the implementation, and represent
+ lightweight tasks that can be scheduled onto available physical CPU threads
+ (typically between 2 and 16) in the hardware.
+ The scheduling of Java threads onto physical threads is handled by Java,
+ and not described here.
+\end_layout
+
+\begin_layout Standard
+The Fantom programmer can decide whether to use one ActorPool for all actors,
+ sharing threads, or whether to put different actors in different ActorPools
+ each with a separate thread allocation.
+\end_layout
+
+\begin_layout Standard
+The Fantom run-time then schedules actors onto available ActorPool threads.
+ This scheduling is done at a message granularity.
+ When an actor has messages to process, and hence computational work to
+ do, it is scheduled onto the next available thread, or immediately onto
+ a new thread if the ActorPool thread limit has not been reached.
+ It will be kept scheduled on the same thread until either it has no more
+ messages to process, or it has processed 100 messages.
+ Then it may be removed from the thread and resources given to another actor
+ instance.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+Actor.locals 
+\family default
+is actor local state that persists from one call of the receive function
+ to the next and that travels with the actor whenever it is scheduled as
+ part of the actor's context.
+ 
+\family typewriter
+Actor.locals
+\family default
+ is a single reference to a map that is immutable - although the Map itself
+ is mutable, and which is copied to a new thread when the actor is scheduled.
+ The context also contains locale information which is read/write and copied
+ to and from a thread when an actor is scheduled or descheduled.
+\end_layout
+
+\begin_layout Subsection
+Exceptions in Actor Code
+\end_layout
+
+\begin_layout Standard
+Exceptions that happen in an Actor 
+\family typewriter
+receive
+\family default
+ function are not necess
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+arily caught.
+ If the function results are read using the the future, the get method that
+ does this will be given the exception, which will be obvious if not handled.
+ However if an actor executes asynchronously any exceptions are not automaticall
+y caught.
+ Therefore good practice using actors is:
+\end_layout
+
+\begin_layout Standard
+Decide where any exception will be handled: If synchronous usually this
+ will be in the future, if asynchronous in the actor receive function.
+ Do one of the following:
+\end_layout
+
+\begin_layout Itemize
+Wrap the receive function in a 
+\family typewriter
+try
+\family default
+ - 
+\family typewriter
+catch
+\family default
+ block to check for exceptions, unexpected exceptions could be logged to
+ stdout.
+\end_layout
+
+\begin_layout Itemize
+Wrap the 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+future.get
+\end_layout
+
+\end_inset
+
+ call in a 
+\family typewriter
+try
+\family default
+ - 
+\family typewriter
+catch
+\family default
+ block.
+\end_layout
+
+\begin_layout Chapter
+Conclusions
+\end_layout
+
+\begin_layout Standard
+Fantom sits with a number of other post-Java languages in a space made available
+ by good compiler technology and virtual machines, with run-time systems
+ that can easily support different high level languages.
+ It is characterised by pragmatism, preferring what works to what is a fun
+ feature.
+ It shares a concern with language utility with Python, but adds to that
+ a much more conventional view that static typing brings benefits in documentati
+on and easy correction of programmatic errors.
+ It is about as fast as Java and therefore does not have the performance
+ overhead of dynamic languages.
+ One caveat is that Fantom is determinedly future-proof, and all numbers
+ are therefore 64 bit.
+ This introduces a speed penalty in 32 bit numeric code for the benefit
+ of greater simplicity and scalability.
+\end_layout
+
+\begin_layout Standard
+Programmers no longer have to use languages that are plain bad.
+ As understanding has developed so what works best has changed and any new
+ language will tend to be better than languages that have evolved from a
+ starting point many years ago.
+\end_layout
+
+\begin_layout Standard
+For new languages to be used good tools and a stable mature compiler are
+ essential.
+ Fantom has both, nicely documented on the Fantom 
+\begin_inset CommandInset href
+LatexCommand href
+name "web site"
+target "http://fantom.org/"
+
+\end_inset
+
+.
+ The language is actively supported by a number of developers who use it
+ commercially in major projects.
+\end_layout
+
+\begin_layout Standard
+One important and actively supported use of the language is for web programming
+ where it can be compiled to JavaScript and run on the client side of applicatio
+ns.
+ The ability to use the same language for client and server side code simplifies
+ web development.
+\end_layout
+
+\begin_layout Standard
+Personally I enjoy Fantom because it has the great productivity and compactness
+ of a scripting language such as Python while providing the contractual
+ security of a statically typed language.
+ I enjoy writing in Python but find the lack of static typing a continual
+ irritant and a real headache when maintaining code.
+ Why should programmers not get proper help from compilers when this can
+ be provided easily and at no cost?
+\end_layout
+
+\begin_layout Standard
+One way to summarise a language is to look at where it sits in the spectrum
+ of design tradeoffs on various axes.
+\end_layout
+
+\begin_layout Subsection*
+Functional programming
+\end_layout
+
+\begin_layout Standard
+Fantom provides exceptional support for functions as first class objects,
+ with closures that can capture local variable references, syntax that is
+ superior to any other language I know, and one of the reasons for liking
+ the language.
+ However it is not particularly designed for functional programming.
+ Support for functional operations on lists, maps is good with convenient
+ syntax and standard 
+\family typewriter
+map
+\family default
+, 
+\family typewriter
+reduce
+\family default
+ but not perfect.
+ The static type system does not currently (1.0.68) track types properly across
+ 
+\family typewriter
+List.map
+\family default
+ and this is annoying, because results default to 
+\family typewriter
+Obj? []
+\family default
+ and so static type checking is unnecessarily lost.
+ other language constructs that support convenient manipulation of functional
+ data structures, such as anonymous types and pattern matching, do not currently
+ exist.
+ In Fantom functions tend to be used to manipulate object-oriented data
+ structures and the trade-offs in adding the missing functional features
+ are unclear.
+ The language therefore sits on the object oriented side of the OO-functional
+ axis.
+\end_layout
+
+\begin_layout Subsection*
+Static versus Dynamic Typing
+\end_layout
+
+\begin_layout Standard
+Fantom lets the programmer choose within a framework that encourages the
+ use of static typing.
+ For many applications Fantom's combines the benefits of both styles.
+ For example, having nullability made explicit in the type system means
+ that programmers must think more carefully about whether objects can be
+ null and provides static checking for a large and frustrating set of typical
+ java run-time errors.
+ On the other hand Fantom's static type system is in other ways not as expressiv
+e as Java with only limited support for generics.
+ This is of course not required because wherever static types don't fit
+ dynamic typing can be used, but some will mind the loss of static expressivenes
+s.
+\end_layout
+
+\begin_layout Standard
+Type inference, on the other hand, is very welcome.
+ Those who have used strongly typed functional languages will take type
+ inference for granted: its use eliminates a lot of unnecessary programming
+ cruft and makes programs more compact and programming more productive.
+\end_layout
+
+\begin_layout Standard
+The key design decision that places Fantom in between static and dynamic
+ languages is the use of implicit casting whenever the cast value 
+\emph on
+could be correct
+\emph default
+.
+ This works surprisingly well: nearly all type errors are still caught by
+ the compiler, and those which are not so caught will be localised to the
+ method in which they originate.
+ The implicit casts together with type inference almost eliminate type-related
+ cruft in code, while static types in method and field signatures are still
+ required.
+\end_layout
+
+\begin_layout Standard
+Overall Fantom sits towards the static typed end but unlike for example
+ Scala does not provide very complex and competent static typing, preferring
+ to replace that complexity where needed by dynamic typing.
+\end_layout
+
+\begin_layout Subsection*
+Built-in high level data types
+\end_layout
+
+\begin_layout Standard
+Fantom as all modern languages scores well with built-in convenient support
+ for maps (hashes) and lists, including specialised literal syntax.
+ Sets currently are missing as a built-in construct, as are user-defined
+ generics that would allow user-defined functions with polymorphic type
+ signatures.
+\end_layout
+
+\begin_layout Subsection*
+Pattern Matching and Anonymous Tuples
+\end_layout
+
+\begin_layout Standard
+Fantom does not have either feature and this is a loss which however is
+ less important than you might think because the language encourages heavy
+ use of closures to operate on objects rather than functional programming.
+\end_layout
+
+\begin_layout Subsection*
+Domain Specific Languages
+\end_layout
+
+\begin_layout Standard
+The modern (and much more powerful and well motivated) equivalent of C's
+ preprocessor is the 
+\emph on
+domain-specific language
+\emph default
+ or DSL.
+ A DSL is way to modify language syntax locally with custom features for
+ a particular application.
+ Fantom has pluses and minuses when it comes to extending language syntax.
+ Its built-in DSL mechanism provides a seamless and very powerful extension
+ to language syntax with convenient usage.
+ Some built-in DSLs deal with, for example, regular expressions.
+ However that power is provided by exposing the compiler internals to the
+ programmer and although the compiler is pretty stable it is not guaranteed
+ to remain so, therefore complex use of DSLs, even though it is relatively
+ easy to implement, is potentially less maintainable than it would be in
+ a language with a defined DSL semantics that is guaranteed not to change.
+\end_layout
+
+\begin_layout Standard
+Fantom thus takes DSLs seriously, but has an implementation which is both
+ powerful and questionable.
+\end_layout
+
+\begin_layout Subsection*
+Reflection and Serialisation
+\end_layout
+
+\begin_layout Standard
+Fantom has excellent support for reflection, similar to that which you would
+ expect in a dynamic language, and built-in serialisation syntax that is
+ easy to use, looks like Fantom code, and is one of the merits of the language.
+\end_layout
+
+\begin_layout Subsection*
+Completeness
+\end_layout
+
+\begin_layout Standard
+Fantom replaces the standard libraries of its main target, the JVM.
+ That makes a higher bar for takeup for experienced programmers who have
+ used Java - who wants to learn a new set of library functions? The benefits
+ are:
+\end_layout
+
+\begin_layout Itemize
+Better standard libraries for most common tasks (the standard libraries
+ are fairly complete but there will always be things they do not do).
+ This is specifically motivated by the wish to use larger classes and provide
+ function parameters where that is natural.
+ It is not surprising that thoughtful rewrite of the Java libraries, which
+ have evolved over many years, results in a cleaner interface.
+\end_layout
+
+\begin_layout Itemize
+Better portability, specifically between JVM and JavaScript although .NET
+ is also a target.
+\end_layout
+
+\begin_layout Standard
+So Fantom is on the all-in-one side of this trade-off.
+ The Fantom tool set is very good and mature as far as deployment compilation
+ and debugging go.
+ There are multiple available competent IDEs but this could be improved.
+ The only IDE with complete in-editor syntax error detection works fine
+ as of now but is not actively supported.
+\end_layout
+
+\begin_layout Subsection*
+Concurrency
+\end_layout
+
+\begin_layout Standard
+Fantom takes concurrency very seriously by building mutability into its
+ type system.
+ The Fantom implementation of actors is fit for purpose, and can be used.
+ It provides higher level support than typical programming with threads.
+ However it is not a core language feature and has peculiarities.
+ Concurrency is perhaps an area of Fantom where new constructs would be
+ welcomed.
+\end_layout
+
+\begin_layout Subsection*
+Simplicity versus Complexity
+\end_layout
+
+\begin_layout Standard
+Fantom is a simple language and easy to learn, especially for those already
+ familiar with Java.
+ It has evolved weighing up the trade-offs of adding features against their
+ cost.
+ That means fewer features, and a more mundane language, but arguably a
+ better one.
+ The main barriers to understanding Fantom are surprising, but natural when
+ understood, it-block syntax and a high-level actor-based mechanism used
+ where concurrency is needed.
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\end_body
+\end_document
