@@ -84,7 +84,7 @@
 \begin_body
 
 \begin_layout Title
-A Short Introduction to Fantom
+A Short Introduction to Fantom 1.0
 \end_layout
 
 \begin_layout Author
@@ -94,7 +94,7 @@ Thomas J.
 \end_layout
 
 \begin_layout Date
-5 May 2014
+11 May 2014
 \end_layout
 
 \begin_layout Standard
@@ -4567,7 +4567,10 @@ with
 \family typewriter
 Obj
 \family default
-, inherited by every class) being defined: 
+, inherited by every class) being defined:
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
 inline false
 status open
@@ -4599,7 +4602,11 @@ virtual This with(|This| f)
 
 \end_inset
 
- Parenthetically it is worth noting that because 
+ 
+\end_layout
+
+\begin_layout Standard
+Parenthetically it is worth noting that because 
 \family typewriter
 with
 \family default
@@ -7080,7 +7087,11 @@ main
 \family typewriter
 Actor.locals
 \family default
- a special Map that holds internal state to the actor:
+ a special Map that holds internal state to the actor: 
+\begin_inset Newline newline
+\end_inset
+
+ 
 \begin_inset listings
 inline false
 status open
@@ -7743,6 +7754,10 @@ handle
 const
 \family default
  field.
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset listings
 inline false
 status open
